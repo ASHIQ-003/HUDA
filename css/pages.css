@@ -1,0 +1,912 @@
+/* ══════════════════════════════════════════════════════════════
+   HUDA — Page-Specific Layouts
+   ══════════════════════════════════════════════════════════════ */
+
+/* ── Home / Welcome Page ── */
+.welcome-hero {
+  text-align: center;
+  padding: var(--space-16) var(--space-8);
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.welcome-bismillah {
+  font-family: var(--font-arabic);
+  font-size: var(--text-3xl);
+  color: var(--color-gold);
+  margin-bottom: var(--space-8);
+  animation: fadeInDown 0.6s ease;
+}
+
+.welcome-title {
+  font-size: var(--text-5xl);
+  font-weight: 800;
+  margin-bottom: var(--space-4);
+  background: linear-gradient(135deg, var(--color-emerald-light), var(--color-gold-light));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: fadeInUp 0.6s ease 0.1s both;
+}
+
+.welcome-subtitle {
+  font-size: var(--text-lg);
+  color: var(--color-text-secondary);
+  max-width: 600px;
+  margin: 0 auto var(--space-10);
+  line-height: var(--leading-relaxed);
+  animation: fadeInUp 0.6s ease 0.2s both;
+}
+
+.welcome-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--space-4);
+  animation: fadeInUp 0.6s ease 0.3s both;
+}
+
+.welcome-card {
+  background: var(--color-bg-secondary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  padding: var(--space-6);
+  text-align: center;
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  box-shadow: var(--shadow-sm);
+}
+
+.welcome-card:hover {
+  border-color: var(--color-emerald);
+  transform: translateY(-4px);
+  box-shadow: 0 10px 25px -5px rgba(16, 185, 129, 0.15);
+}
+
+.welcome-card .wc-icon {
+  font-size: 2rem;
+  margin-bottom: var(--space-3);
+  color: var(--color-emerald);
+}
+
+.welcome-card .wc-title {
+  font-weight: 600;
+  font-size: var(--text-sm);
+  margin-bottom: var(--space-1);
+}
+
+.welcome-card .wc-desc {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+}
+
+/* ── Qur'an Page ── */
+.quran-layout {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: var(--space-6);
+  min-height: calc(100vh - var(--header-height) - var(--space-16));
+}
+
+.quran-sidebar {
+  background: var(--color-bg-secondary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  max-height: calc(100vh - var(--header-height) - var(--space-16));
+  position: sticky;
+  top: calc(var(--header-height) + var(--space-8));
+}
+
+.quran-sidebar-header {
+  padding: var(--space-4) var(--space-5);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.quran-sidebar-search {
+  position: relative;
+}
+
+.quran-sidebar-search input {
+  width: 100%;
+  padding: var(--space-2) var(--space-4) var(--space-2) var(--space-8);
+  background: var(--color-bg-tertiary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  color: var(--color-text-primary);
+  font-size: var(--text-sm);
+  font-family: var(--font-ui);
+  outline: none;
+  transition: border-color var(--transition-fast);
+}
+
+.quran-sidebar-search input:focus {
+  border-color: var(--color-emerald);
+}
+
+.quran-sidebar-search .search-icon {
+  position: absolute;
+  left: var(--space-3);
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--color-text-muted);
+  font-size: var(--text-xs);
+}
+
+.quran-surah-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--space-2);
+}
+
+.quran-reader {
+  flex: 1;
+}
+
+.quran-reader-header {
+  background: var(--color-bg-secondary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  padding: var(--space-6);
+  margin-bottom: var(--space-6);
+  text-align: center;
+}
+
+.surah-title-ar {
+  font-family: var(--font-arabic);
+  font-size: var(--text-4xl);
+  color: var(--color-gold);
+  direction: rtl;
+  margin-bottom: var(--space-2);
+}
+
+.surah-title-en {
+  font-size: var(--text-xl);
+  font-weight: 700;
+  color: var(--color-text-primary);
+}
+
+.surah-info-bar {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-6);
+  margin-top: var(--space-3);
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+}
+
+.surah-info-bar span {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.bismillah-display {
+  text-align: center;
+  padding: var(--space-6) 0;
+  font-family: var(--font-arabic);
+  font-size: var(--text-3xl);
+  color: var(--color-gold);
+  direction: rtl;
+}
+
+.quran-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-4) var(--space-6);
+  background: var(--color-bg-secondary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  margin-bottom: var(--space-6);
+}
+
+.font-controls {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.font-controls label {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+}
+
+.quran-verses {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+/* ── Hadith Page ── */
+.hadith-layout {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: var(--space-6);
+  min-height: calc(100vh - var(--header-height) - var(--space-16));
+}
+
+.hadith-sidebar {
+  background: var(--color-bg-secondary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  max-height: calc(100vh - var(--header-height) - var(--space-16));
+  position: sticky;
+  top: calc(var(--header-height) + var(--space-8));
+}
+
+.hadith-collections {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--space-2);
+}
+
+.collection-item {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-1);
+  padding: var(--space-4);
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  color: var(--color-text-secondary);
+  border: 1px solid transparent;
+  width: 100%;
+}
+.collection-name {
+  font-weight: 600;
+  font-size: var(--text-base);
+  color: var(--color-text);
+}
+.collection-meta {
+  font-size: var(--text-xs);
+  color: var(--color-emerald-light);
+}
+
+.collection-item:hover {
+  background: var(--color-bg-tertiary);
+  color: var(--color-text-primary);
+}
+
+.collection-item.active {
+  background: var(--color-emerald-glow);
+  color: var(--color-emerald-light);
+  border: 1px solid var(--color-border-accent);
+}
+
+.collection-icon {
+  font-size: var(--text-lg);
+}
+
+.hadith-content {
+  flex: 1;
+}
+
+.hadith-card {
+  background: var(--color-bg-secondary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  padding: var(--space-6);
+  margin-bottom: var(--space-4);
+  transition: all var(--transition-normal);
+}
+
+.hadith-card:hover {
+  border-color: var(--color-border-accent);
+}
+
+.hadith-narrator {
+  font-size: var(--text-sm);
+  color: var(--color-emerald-light);
+  font-weight: 500;
+  margin-bottom: var(--space-3);
+}
+
+.hadith-arabic {
+  font-family: var(--font-arabic);
+  font-size: var(--arabic-size);
+  line-height: var(--leading-arabic);
+  color: var(--color-text-arabic);
+  direction: rtl;
+  text-align: right;
+  padding: var(--space-3) 0;
+  border-bottom: 1px solid var(--color-border-light);
+}
+
+.hadith-english {
+  font-size: 1.15rem;
+  color: var(--color-text);
+  line-height: var(--leading-relaxed);
+  padding: var(--space-4) 0;
+}
+
+.hadith-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: var(--space-3);
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--color-border-light);
+}
+
+.hadith-grade {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.hadith-ref {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+}
+
+/* ── Prayer Times Page ── */
+.prayer-times-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-6);
+}
+
+.prayer-times-main {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.prayer-location {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  background: var(--color-bg-secondary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+}
+
+.prayer-location .location-icon {
+  color: var(--color-emerald);
+  font-size: var(--text-lg);
+}
+
+/* ── Du'as & Adhkar Page ── */
+.duas-layout {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.duas-categories {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: var(--space-4);
+}
+
+.category-card {
+  background: var(--color-bg-secondary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  padding: var(--space-6);
+  text-align: center;
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  box-shadow: var(--shadow-sm);
+}
+
+.category-card:hover {
+  border-color: var(--color-emerald);
+  transform: translateY(-4px);
+  box-shadow: 0 10px 25px -5px rgba(16, 185, 129, 0.15);
+}
+
+.category-card .cat-icon {
+  font-size: 1.5rem;
+  margin-bottom: var(--space-2);
+}
+
+.category-card .cat-title {
+  font-weight: 600;
+  font-size: var(--text-sm);
+  margin-bottom: var(--space-1);
+}
+
+.category-card .cat-count {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+}
+
+.dua-card {
+  background: var(--color-bg-secondary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  padding: var(--space-6);
+  margin-bottom: var(--space-4);
+}
+
+.dua-arabic {
+  font-family: var(--font-arabic);
+  font-size: 1.8rem;
+  line-height: 2.2;
+  color: var(--color-text);
+  direction: rtl;
+  text-align: right;
+  padding: var(--space-4) 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.dua-transliteration {
+  font-size: 1.05rem;
+  color: var(--color-gold-light);
+  font-style: italic;
+  padding: var(--space-3) 0 var(--space-2);
+}
+
+.dua-translation {
+  font-size: 1.15rem;
+  color: var(--color-text);
+  line-height: var(--leading-relaxed);
+  padding: var(--space-2) 0 var(--space-4);
+}
+
+.dua-reference {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-top: var(--space-3);
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+}
+
+.dua-reference .ref-icon {
+  color: var(--color-emerald);
+}
+
+.dua-count-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: var(--space-1) var(--space-3);
+  background: var(--color-gold-glow);
+  border: 1px solid rgba(245, 158, 11, 0.2);
+  border-radius: var(--radius-full);
+  font-size: var(--text-xs);
+  color: var(--color-gold-light);
+}
+
+/* ── Adhkar Counter View ── */
+.adhkar-counter-view {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-6);
+  padding: var(--space-8);
+}
+
+.adhkar-progress {
+  width: 100%;
+  max-width: 400px;
+  height: 6px;
+  background: var(--color-bg-tertiary);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+.adhkar-progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--color-emerald), var(--color-emerald-light));
+  border-radius: var(--radius-full);
+  transition: width var(--transition-normal);
+}
+
+.adhkar-tap-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-6);
+  background: var(--color-bg-tertiary);
+  border: 1px dashed var(--color-border-accent);
+  border-radius: var(--radius-xl);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  margin-top: var(--space-4);
+}
+
+.adhkar-tap-area:hover {
+  background: var(--color-emerald-glow);
+  border-color: var(--color-emerald);
+}
+
+.adhkar-tap-area:active {
+  transform: scale(0.98);
+}
+
+.adhkar-count-display {
+  font-size: 3rem;
+  font-weight: 800;
+  color: var(--color-emerald);
+  line-height: 1;
+}
+
+/* ── Prayer Times ── */
+.next-prayer-banner {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.05) 0%, rgba(16, 185, 129, 0.15) 100%);
+  border: 1px solid rgba(16, 185, 129, 0.2);
+  border-radius: var(--radius-xl);
+  padding: var(--space-8);
+  box-shadow: 0 10px 30px -10px rgba(16, 185, 129, 0.2);
+  margin-bottom: var(--space-8);
+}
+
+/* ── Calculator Pages ── */
+.calc-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-8);
+  max-width: 1000px;
+}
+
+.calc-form {
+  background: var(--color-bg-secondary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  padding: var(--space-6);
+}
+
+.calc-results {
+  position: sticky;
+  top: calc(var(--header-height) + var(--space-8));
+}
+
+.calc-section-title {
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--color-emerald-light);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: var(--space-4);
+  padding-bottom: var(--space-2);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.heir-selector {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: var(--space-3);
+}
+
+.heir-option {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-3);
+  background: var(--color-bg-tertiary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  font-size: var(--text-sm);
+}
+
+.heir-option:hover {
+  border-color: var(--color-border-accent);
+}
+
+.heir-option.selected {
+  background: var(--color-emerald-glow);
+  border-color: var(--color-emerald);
+  color: var(--color-emerald-light);
+}
+
+.heir-option input {
+  display: none;
+}
+
+.heir-count {
+  width: 60px;
+  padding: var(--space-1) var(--space-2);
+  background: var(--color-bg-secondary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  color: var(--color-text-primary);
+  font-size: var(--text-sm);
+  text-align: center;
+  font-family: var(--font-ui);
+  outline: none;
+}
+
+/* ── Qiblah Page ── */
+.qiblah-layout {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-8);
+  padding: var(--space-8) 0;
+}
+
+.qiblah-info {
+  text-align: center;
+  max-width: 400px;
+}
+
+
+.qiblah-degrees {
+  font-size: var(--text-4xl);
+  font-weight: 800;
+  color: var(--color-emerald-light);
+  margin-top: var(--space-2);
+}
+
+/* ── Ramadan Page ── */
+.ramadan-layout {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.ramadan-header-card {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(245, 158, 11, 0.1));
+  border: 1px solid var(--color-border-accent);
+  border-radius: var(--radius-2xl);
+  padding: var(--space-8);
+  text-align: center;
+}
+
+.ramadan-countdown {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-6);
+}
+
+.ramadan-unit {
+  text-align: center;
+}
+
+.ramadan-unit .unit-value {
+  font-size: var(--text-4xl);
+  font-weight: 800;
+  color: var(--color-emerald-light);
+  display: block;
+}
+
+.ramadan-unit .unit-label {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+}
+
+.ramadan-calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: var(--space-3);
+}
+
+.ramadan-day {
+  background: var(--color-bg-secondary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-3);
+  font-size: var(--text-sm);
+  text-align: center;
+  transition: all var(--transition-fast);
+}
+
+.ramadan-day.today {
+  border-color: var(--color-emerald);
+  background: var(--color-emerald-glow);
+}
+
+.ramadan-day.completed {
+  opacity: 0.5;
+}
+
+.ramadan-day.last-ten {
+  border-color: var(--color-gold);
+  background: var(--color-gold-glow);
+}
+
+.ramadan-day .day-num {
+  font-weight: 700;
+  font-size: var(--text-lg);
+  color: var(--color-text-primary);
+}
+
+.ramadan-day .day-times {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  margin-top: var(--space-1);
+}
+
+/* ── Search Results Page ── */
+.search-results-layout {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.search-result-card {
+  background: var(--color-bg-secondary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  padding: var(--space-5);
+  margin-bottom: var(--space-3);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.search-result-card:hover {
+  border-color: var(--color-border-accent);
+}
+
+.search-result-card .result-source {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.search-result-card .result-text {
+  color: var(--color-text-secondary);
+  font-size: var(--text-sm);
+  margin-top: var(--space-2);
+  line-height: var(--leading-relaxed);
+}
+
+.search-result-card .result-text mark {
+  background: var(--color-emerald-glow);
+  color: var(--color-emerald-light);
+  padding: 0 2px;
+  border-radius: 2px;
+}
+
+/* ── Prayer Guide Page ── */
+.prayer-guide-layout {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.prayer-step {
+  display: flex;
+  gap: var(--space-5);
+  padding: var(--space-6);
+  background: var(--color-bg-secondary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  margin-bottom: var(--space-4);
+}
+
+.step-number {
+  width: 48px;
+  height: 48px;
+  min-width: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--color-emerald), var(--color-emerald-light));
+  color: #fff;
+  border-radius: var(--radius-full);
+  font-weight: 700;
+  font-size: 1.2rem;
+  box-shadow: var(--shadow-sm);
+}
+
+.step-content {
+  flex: 1;
+}
+
+.step-title {
+  font-weight: 700;
+  font-size: 1.25rem;
+  margin-bottom: var(--space-2);
+  color: var(--color-text);
+}
+
+.step-description {
+  font-size: 1.05rem;
+  color: var(--color-text);
+  line-height: var(--leading-relaxed);
+  margin-bottom: var(--space-3);
+}
+
+.step-arabic {
+  font-family: var(--font-arabic);
+  font-size: var(--arabic-size);
+  line-height: var(--leading-arabic);
+  color: var(--color-text);
+  direction: rtl;
+  text-align: right;
+  margin: var(--space-4) 0;
+  padding: var(--space-4);
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+}
+
+.step-transliteration {
+  font-size: 1.05rem;
+  color: var(--color-gold-light);
+  font-style: italic;
+  margin-bottom: var(--space-2);
+}
+
+.step-evidence {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-top: var(--space-3);
+  padding: var(--space-2) var(--space-3);
+  background: var(--color-emerald-soft);
+  border-radius: var(--radius-md);
+  font-size: var(--text-xs);
+  color: var(--color-emerald-light);
+}
+
+/* ── Responsive Overrides ── */
+@media (max-width: 1024px) {
+  .quran-layout {
+    grid-template-columns: 280px 1fr;
+  }
+
+  .hadith-layout {
+    grid-template-columns: 240px 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .quran-layout,
+  .hadith-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .quran-sidebar,
+  .hadith-sidebar {
+    position: relative;
+    top: 0;
+    max-height: 300px;
+  }
+
+  .prayer-times-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .calc-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .calc-results {
+    position: relative;
+    top: 0;
+  }
+
+  .welcome-title {
+    font-size: var(--text-3xl);
+  }
+
+  .ramadan-countdown {
+    gap: var(--space-4);
+  }
+
+  .ramadan-unit .unit-value {
+    font-size: var(--text-2xl);
+  }
+}
+
+/* ──────── HABIT TRACKER STYLES ──────── */
+.tracker-item:hover {
+  background: var(--color-bg-secondary) !important;
+}
+
+.tracker-item.completed {
+  border-left: 4px solid var(--color-emerald);
+  opacity: 0.8;
+}
+
+.tracker-item.completed span {
+  text-decoration: line-through;
+  color: var(--color-text-muted);
+}
