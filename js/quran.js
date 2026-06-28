@@ -1,9 +1,9 @@
-/* ══════════════════════════════════════════════════════════════
-   HUDA — Qur'an Module
-   ══════════════════════════════════════════════════════════════ */
+/* ΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉ
+   HUDA ΓÇö Qur'an Module
+   ΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉ */
 
 window.QuranModule = (() => {
-  // ── State ──
+  // ΓöÇΓöÇ State ΓöÇΓöÇ
   let surahs = [];
   let currentSurahNumber = null;
   let surahData = null; // Contains both Arabic and English text
@@ -29,12 +29,12 @@ window.QuranModule = (() => {
   }
   let BASMALAH_AUDIO_URL = getEveryAyahUrl(currentReciter, 1, 1);
 
-  // ── DOM Elements ──
+  // ΓöÇΓöÇ DOM Elements ΓöÇΓöÇ
   let surahListEl;
   let verseContainerEl;
   let surahSearchEl;
 
-  // ── Initialization ──
+  // ΓöÇΓöÇ Initialization ΓöÇΓöÇ
   async function init() {
     if (surahs.length > 0) return; // Already initialized
 
@@ -133,7 +133,7 @@ window.QuranModule = (() => {
     }
   }
 
-  // ── Render Surah List ──
+  // ΓöÇΓöÇ Render Surah List ΓöÇΓöÇ
   function renderSurahList(list) {
     if (!surahListEl) return;
     surahListEl.innerHTML = '';
@@ -150,7 +150,7 @@ window.QuranModule = (() => {
           <div class="surah-meaning">${surah.englishNameTranslation}</div>
         </div>
         <div class="surah-meta">
-          <div class="surah-name-ar">${surah.name.replace('سُورَةُ ', '')}</div>
+          <div class="surah-name-ar">${surah.name.replace('╪│┘Å┘ê╪▒┘Ä╪⌐┘Å ', '')}</div>
           <div class="surah-verses">${surah.numberOfAyahs} ayahs</div>
         </div>
       `;
@@ -168,7 +168,7 @@ window.QuranModule = (() => {
     renderSurahList(filtered);
   }
 
-  // ── Load Surah ──
+  // ΓöÇΓöÇ Load Surah ΓöÇΓöÇ
   async function loadSurah(number) {
     if (currentSurahNumber === number) return;
 
@@ -185,10 +185,10 @@ window.QuranModule = (() => {
     document.getElementById('surahTitleAr').textContent = surahMeta.name;
     document.getElementById('surahTitleEn').textContent = surahMeta.englishName;
     document.getElementById('surahInfoBar').innerHTML = `
-      <span>📜 ${surahMeta.revelationType}</span>
-      <span>•</span>
+      <span>≡ƒô£ ${surahMeta.revelationType}</span>
+      <span>ΓÇó</span>
       <span>${surahMeta.numberOfAyahs} Verses</span>
-      <span>•</span>
+      <span>ΓÇó</span>
       <button class="btn btn-sm btn-secondary" onclick="window.QuranModule.togglePlaySurah()" id="playSurahBtn">
         <span class="icon"><svg class="nav-icon svg-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span> Play
       </button>
@@ -219,7 +219,7 @@ window.QuranModule = (() => {
     }
   }
 
-  // ── Render Verses ──
+  // ΓöÇΓöÇ Render Verses ΓöÇΓöÇ
   function renderVerses() {
     if (!surahData || surahData.length < 2) return;
     
@@ -241,7 +241,7 @@ window.QuranModule = (() => {
       // Remove basmalah from first verse of every surah (except Al-Fatiha)
       let arText = ar.text;
       if (i === 0 && currentSurahNumber !== 1) {
-        arText = arText.replace(/^بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ /, '');
+        arText = arText.replace(/^╪¿┘É╪│┘Æ┘à┘É ┘▒┘ä┘ä┘Ä┘æ┘ç┘É ┘▒┘ä╪▒┘Ä┘æ╪¡┘Æ┘à┘Ä┘░┘å┘É ┘▒┘ä╪▒┘Ä┘æ╪¡┘É┘è┘à┘É /, '');
       }
 
       const verseEl = document.createElement('div');
@@ -271,7 +271,7 @@ window.QuranModule = (() => {
     }
   }
 
-  // ── Audio Controls ──
+  // ΓöÇΓöÇ Audio Controls ΓöÇΓöÇ
   function togglePlaySurah() {
     if (isPlaying) {
       pauseAudio();
@@ -460,7 +460,7 @@ window.QuranModule = (() => {
     }
   }
 
-  // ── Font Size Controls ──
+  // ΓöÇΓöÇ Font Size Controls ΓöÇΓöÇ
   function adjustFont(type, change) {
     const root = document.documentElement;
     if (type === 'arabic') {
@@ -478,7 +478,7 @@ window.QuranModule = (() => {
     }
   }
 
-  // ── Navigation Controls ──
+  // ΓöÇΓöÇ Navigation Controls ΓöÇΓöÇ
   function prevSurah() {
     if (currentSurahNumber > 1) {
       loadSurah(currentSurahNumber - 1);
@@ -491,202 +491,7 @@ window.QuranModule = (() => {
     }
   }
 
-  // ── Reload Language ──
-  function reloadLang() {
-    if (currentSurahNumber) {
-      const num = currentSurahNumber;
-      currentSurahNumber = null; // Clear so it fetches again
-      loadSurah(num);
-    }
-    if (surahs.length > 0) {
-      renderSurahList(surahs);
-    }
-  }
-
-  function saveBookmark(surahNumber, ayahIndex) {
-    const bookmark = { surah: surahNumber, ayah: ayahIndex, timestamp: Date.now() };
-    
-    // Save to bookmarks array
-    let bookmarks = [];
-    try {
-      const stored = localStorage.getItem('huda_bookmarks');
-      if (stored) bookmarks = JSON.parse(stored);
-    } catch(e) {}
-    
-    // Check if already exists to avoid duplicates
-    const exists = bookmarks.findIndex(b => b.surah === surahNumber && b.ayah === ayahIndex);
-    if (exists !== -1) {
-      bookmarks.splice(exists, 1); // Remove if exists so we can add it fresh at the top
-    }
-    
-    bookmarks.unshift(bookmark); // Add to beginning
-    localStorage.setItem('huda_bookmarks', JSON.stringify(bookmarks));
-    window.HudaApp.showToast(`Saved Bookmark for Surah ${surahNumber}, Ayah ${ayahIndex + 1}`, 'success');
-    
-    // Provide visual feedback
-    const verseEl = document.getElementById(`verse-${ayahIndex}`);
-    if (verseEl) {
-      verseEl.style.transition = 'box-shadow 0.3s ease';
-        album: 'Huda - The Guidance',
-        artwork: [
-          { src: './logo.png', sizes: '192x192', type: 'image/png' },
-          { src: './logo.png', sizes: '512x512', type: 'image/png' }
-        ]
-      });
-
-      navigator.mediaSession.setActionHandler('play', () => togglePlaySurah());
-      navigator.mediaSession.setActionHandler('pause', () => pauseAudio());
-      navigator.mediaSession.setActionHandler('previoustrack', () => playPrevAyah());
-      navigator.mediaSession.setActionHandler('nexttrack', () => playNextAyah());
-    }
-  }
-
-  function playAyahIndex(index) {
-    if (!audioUrls || audioUrls.length === 0 || index >= audioUrls.length) return;
-    
-    isPlayingBasmalah = false;
-    currentAyahIndex = index;
-    audioPlayerEl.src = audioUrls[index];
-    audioPlayerEl.play().catch(e => console.error("Audio playback failed", e));
-    
-    // Preload next ayah to eliminate pause
-    if (index + 1 < audioUrls.length) {
-      let preloader = document.getElementById('quranAudioPreloader');
-      if (!preloader) {
-        preloader = document.createElement('audio');
-        preloader.id = 'quranAudioPreloader';
-        preloader.style.display = 'none';
-        document.body.appendChild(preloader);
-      }
-      preloader.src = audioUrls[index + 1];
-      preloader.preload = 'auto';
-    }
-    
-    highlightVerse(index);
-    updatePlayButtonState(true);
-
-    const surahMeta = surahs.find(s => s.number === currentSurahNumber);
-    if (surahMeta) updateMediaSession(surahMeta, index, false);
-    
-    // Auto-save last read progress quietly
-    autoSaveLastRead(currentSurahNumber, index);
-  }
-
-  function pauseAudio() {
-    if (audioPlayerEl) audioPlayerEl.pause();
-  }
-
-  function stopAudio() {
-    if (audioPlayerEl) {
-      audioPlayerEl.pause();
-      audioPlayerEl.currentTime = 0;
-    }
-    isPlaying = false;
-    isPlayingBasmalah = false;
-    currentAyahIndex = 0;
-    updatePlayButtonState(false);
-    highlightVerse(-1);
-  }
-
-  function playNextAyah() {
-    if (isPlayingBasmalah) {
-      isPlayingBasmalah = false;
-      playAyahIndex(0);
-      return;
-    }
-    
-    if (currentAyahIndex < audioUrls.length - 1) {
-      playAyahIndex(currentAyahIndex + 1);
-    } else {
-      // Finished surah
-      stopAudio();
-    }
-  }
-
-  function playPrevAyah() {
-    if (currentAyahIndex > 0) {
-      playAyahIndex(currentAyahIndex - 1);
-    } else {
-      stopAudio();
-    }
-  }
-
-  function highlightVerse(index) {
-    document.querySelectorAll('.verse-card').forEach(el => el.classList.remove('playing'));
-    const bismillahDisplay = document.getElementById('bismillahDisplay');
-    if (bismillahDisplay) bismillahDisplay.style.opacity = '1';
-
-    if (index === -2) {
-      // Highlighting Basmalah
-      if (bismillahDisplay) {
-        bismillahDisplay.style.opacity = '0.5';
-        bismillahDisplay.style.transition = 'opacity 0.3s ease';
-        // Make it glow a bit while playing
-        bismillahDisplay.style.textShadow = '0 0 15px rgba(16, 185, 129, 0.5)';
-      }
-      
-      const stickyName = document.getElementById('audioNowPlaying');
-      const stickyAyah = document.getElementById('audioAyahNumber');
-      if (stickyName) stickyName.textContent = "Bismillah";
-      if (stickyAyah) stickyAyah.textContent = "";
-      
-      const stickyPlayer = document.getElementById('stickyAudioPlayer');
-      if (stickyPlayer) stickyPlayer.style.display = 'block';
-    } else if (index >= 0) {
-      if (bismillahDisplay) bismillahDisplay.style.textShadow = 'none';
-      
-      const el = document.getElementById(`verse-${index}`);
-      if (el) {
-        el.classList.add('playing');
-        el.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      }
-      
-      const stickyName = document.getElementById('audioNowPlaying');
-      const stickyAyah = document.getElementById('audioAyahNumber');
-      const surahMeta = surahs.find(s => s.number === currentSurahNumber);
-      if (stickyName && surahMeta) stickyName.textContent = surahMeta.englishName;
-      if (stickyAyah && surahData) stickyAyah.textContent = `Ayah ${surahData[0].ayahs[index].numberInSurah}`;
-      
-      const stickyPlayer = document.getElementById('stickyAudioPlayer');
-      if (stickyPlayer) stickyPlayer.style.display = 'block';
-    } else {
-      const stickyPlayer = document.getElementById('stickyAudioPlayer');
-      if (stickyPlayer) stickyPlayer.style.display = 'none';
-    }
-  }
-
-  // ── Font Size Controls ──
-  function adjustFont(type, change) {
-    const root = document.documentElement;
-    if (type === 'arabic') {
-      const currentSize = parseFloat(getComputedStyle(root).getPropertyValue('--arabic-size'));
-      let newSize = currentSize + (change * 0.25);
-      if (newSize > 3) newSize = 3;
-      if (newSize < 1) newSize = 1;
-      root.style.setProperty('--arabic-size', `${newSize}rem`);
-    } else {
-      const currentSize = parseFloat(getComputedStyle(root).getPropertyValue('--translation-size'));
-      let newSize = currentSize + (change * 0.125);
-      if (newSize > 1.5) newSize = 1.5;
-      if (newSize < 0.75) newSize = 0.75;
-      root.style.setProperty('--translation-size', `${newSize}rem`);
-    }
-  }
-
-  // ── Navigation Controls ──
-  function prevSurah() {
-    if (currentSurahNumber > 1) {
-      loadSurah(currentSurahNumber - 1);
-    }
-  }
-
-  function nextSurah() {
-    if (currentSurahNumber < 114) {
-      loadSurah(currentSurahNumber + 1);
-    }
-  }
-
-  // ── Reload Language ──
+  // ΓöÇΓöÇ Reload Language ΓöÇΓöÇ
   function reloadLang() {
     if (currentSurahNumber) {
       const num = currentSurahNumber;
@@ -754,13 +559,11 @@ window.QuranModule = (() => {
     BASMALAH_AUDIO_URL = getEveryAyahUrl(currentReciter, 1, 1);
     
     if (currentSurahNumber && surahData) {
-      // Just update the audio URLs seamlessly without reloading the surah
       const arabicVerses = surahData[0].ayahs;
       audioUrls = arabicVerses.map(a => {
         return getEveryAyahUrl(currentReciter, currentSurahNumber, a.numberInSurah);
       });
       
-      // If audio is currently playing, switch immediately to the new reciter for the current Ayah
       if (isPlaying && audioPlayerEl) {
         if (isPlayingBasmalah) {
           audioPlayerEl.src = BASMALAH_AUDIO_URL;

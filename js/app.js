@@ -90,10 +90,10 @@ window.HudaApp = (() => {
   // ── Mobile Gestures & Haptics ──
   function triggerHaptic(type = 'light') {
     if (navigator.vibrate) {
-      if (type === 'light') navigator.vibrate(10);
-      else if (type === 'medium') navigator.vibrate(30);
-      else if (type === 'heavy') navigator.vibrate(50);
-      else if (type === 'success') navigator.vibrate([10, 30, 20]);
+      if (type === 'light') navigator.vibrate(40);
+      else if (type === 'medium') navigator.vibrate(60);
+      else if (type === 'heavy') navigator.vibrate(90);
+      else if (type === 'success') navigator.vibrate([40, 60, 40]);
     }
   }
 
