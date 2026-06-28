@@ -1,9 +1,9 @@
-/* ΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉ
-   HUDA ΓÇö Qur'an Module
-   ΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉ */
+/* ══════════════════════════════════════════════════════════════
+   HUDA — Qur'an Module
+   ══════════════════════════════════════════════════════════════ */
 
 window.QuranModule = (() => {
-  // ΓöÇΓöÇ State ΓöÇΓöÇ
+  // ── State ──
   let surahs = [];
   let currentSurahNumber = null;
   let surahData = null; // Contains both Arabic and English text
@@ -29,12 +29,12 @@ window.QuranModule = (() => {
   }
   let BASMALAH_AUDIO_URL = getEveryAyahUrl(currentReciter, 1, 1);
 
-  // ΓöÇΓöÇ DOM Elements ΓöÇΓöÇ
+  // ── DOM Elements ──
   let surahListEl;
   let verseContainerEl;
   let surahSearchEl;
 
-  // ΓöÇΓöÇ Initialization ΓöÇΓöÇ
+  // ── Initialization ──
   async function init() {
     if (surahs.length > 0) return; // Already initialized
 
@@ -133,7 +133,7 @@ window.QuranModule = (() => {
     }
   }
 
-  // ΓöÇΓöÇ Render Surah List ΓöÇΓöÇ
+  // ── Render Surah List ──
   function renderSurahList(list) {
     if (!surahListEl) return;
     surahListEl.innerHTML = '';
@@ -150,7 +150,7 @@ window.QuranModule = (() => {
           <div class="surah-meaning">${surah.englishNameTranslation}</div>
         </div>
         <div class="surah-meta">
-          <div class="surah-name-ar">${surah.name.replace('╪│┘Å┘ê╪▒┘Ä╪⌐┘Å ', '')}</div>
+          <div class="surah-name-ar">${surah.name.replace('سُورَةُ ', '')}</div>
           <div class="surah-verses">${surah.numberOfAyahs} ayahs</div>
         </div>
       `;
@@ -168,7 +168,7 @@ window.QuranModule = (() => {
     renderSurahList(filtered);
   }
 
-  // ΓöÇΓöÇ Load Surah ΓöÇΓöÇ
+  // ── Load Surah ──
   async function loadSurah(number) {
     if (currentSurahNumber === number) return;
 
@@ -185,10 +185,10 @@ window.QuranModule = (() => {
     document.getElementById('surahTitleAr').textContent = surahMeta.name;
     document.getElementById('surahTitleEn').textContent = surahMeta.englishName;
     document.getElementById('surahInfoBar').innerHTML = `
-      <span>≡ƒô£ ${surahMeta.revelationType}</span>
-      <span>ΓÇó</span>
+      <span>📜 ${surahMeta.revelationType}</span>
+      <span>•</span>
       <span>${surahMeta.numberOfAyahs} Verses</span>
-      <span>ΓÇó</span>
+      <span>•</span>
       <button class="btn btn-sm btn-secondary" onclick="window.QuranModule.togglePlaySurah()" id="playSurahBtn">
         <span class="icon"><svg class="nav-icon svg-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span> Play
       </button>
@@ -219,7 +219,7 @@ window.QuranModule = (() => {
     }
   }
 
-  // ΓöÇΓöÇ Render Verses ΓöÇΓöÇ
+  // ── Render Verses ──
   function renderVerses() {
     if (!surahData || surahData.length < 2) return;
     
@@ -241,7 +241,7 @@ window.QuranModule = (() => {
       // Remove basmalah from first verse of every surah (except Al-Fatiha)
       let arText = ar.text;
       if (i === 0 && currentSurahNumber !== 1) {
-        arText = arText.replace(/^╪¿┘É╪│┘Æ┘à┘É ┘▒┘ä┘ä┘Ä┘æ┘ç┘É ┘▒┘ä╪▒┘Ä┘æ╪¡┘Æ┘à┘Ä┘░┘å┘É ┘▒┘ä╪▒┘Ä┘æ╪¡┘É┘è┘à┘É /, '');
+        arText = arText.replace(/^بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ /, '');
       }
 
       const verseEl = document.createElement('div');
@@ -271,7 +271,7 @@ window.QuranModule = (() => {
     }
   }
 
-  // ΓöÇΓöÇ Audio Controls ΓöÇΓöÇ
+  // ── Audio Controls ──
   function togglePlaySurah() {
     if (isPlaying) {
       pauseAudio();
@@ -460,7 +460,7 @@ window.QuranModule = (() => {
     }
   }
 
-  // ΓöÇΓöÇ Font Size Controls ΓöÇΓöÇ
+  // ── Font Size Controls ──
   function adjustFont(type, change) {
     const root = document.documentElement;
     if (type === 'arabic') {
@@ -478,7 +478,7 @@ window.QuranModule = (() => {
     }
   }
 
-  // ΓöÇΓöÇ Navigation Controls ΓöÇΓöÇ
+  // ── Navigation Controls ──
   function prevSurah() {
     if (currentSurahNumber > 1) {
       loadSurah(currentSurahNumber - 1);
@@ -491,7 +491,7 @@ window.QuranModule = (() => {
     }
   }
 
-  // ΓöÇΓöÇ Reload Language ΓöÇΓöÇ
+  // ── Reload Language ──
   function reloadLang() {
     if (currentSurahNumber) {
       const num = currentSurahNumber;
