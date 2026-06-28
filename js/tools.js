@@ -241,7 +241,7 @@ window.ToolsModule = (() => {
     if (tabId === 'tracker') target = 'ramadanTracker';
     if (tabId === 'calendar') target = 'ramadanCalendar';
     
-    document.getElementById(target).style.display = 'block';
+    if (target) document.getElementById(target).style.display = 'block';
   }
 
   function generateFastingTracker() {

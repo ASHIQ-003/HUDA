@@ -5,6 +5,7 @@
 window.PrayerModule = (() => {
   let prayerTimesData = null;
   let countdownInterval = null;
+  let nextPrayer = null;
   
   // ── Initialization for Prayer Times ──
   async function initPrayerTimes() {
@@ -112,7 +113,7 @@ window.PrayerModule = (() => {
     container.innerHTML = '';
     
     const now = new Date();
-    let nextPrayer = null;
+    nextPrayer = null;
     let nextPrayerTimeMs = Infinity;
     
     prayers.forEach(prayer => {
