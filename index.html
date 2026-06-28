@@ -1,18 +1,18 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0, user-scalable=no">
-  <meta name="description" content="Huda â€” Your trusted companion for authentic Islamic guidance from the Qur'an and Sahih Sunnah.">
+  <meta name="description" content="Huda — Your trusted companion for authentic Islamic guidance from the Qur'an and Sahih Sunnah.">
   <meta name="theme-color" content="#060b18">
   <link rel="manifest" href="./manifest.json">
   <link rel="apple-touch-icon" href="./logo.png">
   <link rel="icon" type="image/png" href="./logo.png">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <title>Huda â€” Authentic Islam</title>
+  <title>Huda — Authentic Islam</title>
 
-  <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• STYLESHEETS â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
+  <!-- ═══════════════ STYLESHEETS ═══════════════ -->
   <link rel="stylesheet" href="css/design-system.css?v=6">
   <link rel="stylesheet" href="css/components.css?v=6">
   <link rel="stylesheet" href="css/pages.css?v=6">
@@ -35,7 +35,7 @@
 </head>
 <body>
 
-  <!-- âœ¨ SPLASH SCREEN âœ¨ -->
+  <!-- ✨ SPLASH SCREEN ✨ -->
   <div id="splashScreen" style="
     position: fixed; inset: 0; z-index: 99999;
     background: radial-gradient(ellipse at center, #0d3b2e 0%, #060b18 70%);
@@ -104,7 +104,7 @@
       }, 2200);
     });
   </script>
-  <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• SIDEBAR NAVIGATION â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
+  <!-- ═══════════════ SIDEBAR NAVIGATION ═══════════════ -->
   <div id="sidebarOverlay" class="sidebar-overlay" onclick="window.HudaApp.toggleSidebar()"></div>
   <nav class="sidebar" id="sidebar" aria-label="Main Navigation">
     <div class="sidebar-brand">
@@ -112,7 +112,7 @@
       <div class="brand-text">
         <div class="brand-name">Huda</div>
       </div>
-      <button class="menu-toggle" onclick="window.HudaApp.toggleSidebar()" aria-label="Close menu" style="margin-left: auto;">âœ•</button>
+      <button class="menu-toggle" onclick="window.HudaApp.toggleSidebar()" aria-label="Close menu" style="margin-left: auto;">✕</button>
     </div>
 
     <div class="nav-links">
@@ -129,7 +129,7 @@
         <span class="nav-icon" aria-hidden="true"><svg class="nav-icon svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l-6 5v13a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V7z"></path></svg></span><span class="nav-label" data-i18n="nav.prayerGuide">Prayer Guide</span>
       </button>
       <button class="nav-item" data-page="duas" onclick="window.HudaApp.navigateTo('duas')">
-        <span class="nav-icon" aria-hidden="true"><svg class="nav-icon svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12V8H6a2 2 0 0 1-2-2c0-1.1.9-2 2-2h12v4"></path><path d="M4 6v12c0 1.1.9 2 2 2h14v-4H6a2 2 0 0 1-2-2"></path></svg></span><span class="nav-label" data-i18n="nav.duas">Du'Äs</span>
+        <span class="nav-icon" aria-hidden="true"><svg class="nav-icon svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12V8H6a2 2 0 0 1-2-2c0-1.1.9-2 2-2h12v4"></path><path d="M4 6v12c0 1.1.9 2 2 2h14v-4H6a2 2 0 0 1-2-2"></path></svg></span><span class="nav-label" data-i18n="nav.duas">Du'ās</span>
       </button>
       <button class="nav-item" onclick="window.HudaApp.navigateTo('adhkar')" data-page="adhkar">
         <span class="nav-icon" aria-hidden="true"><svg class="nav-icon svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line></svg></span>
@@ -141,7 +141,7 @@
 
       <div class="nav-section-title" data-i18n="nav.tools">Tools</div>
       <button class="nav-item" data-page="prayer-times" onclick="window.HudaApp.navigateTo('prayer-times')">
-        <span class="nav-icon" aria-hidden="true">ðŸ•</span><span class="nav-label" data-i18n="nav.prayerTimes">Prayer Times</span>
+        <span class="nav-icon" aria-hidden="true">🕐</span><span class="nav-label" data-i18n="nav.prayerTimes">Prayer Times</span>
       </button>
       <button class="nav-item" data-page="qiblah" onclick="window.HudaApp.navigateTo('qiblah')">
         <span class="nav-icon" aria-hidden="true"><svg class="nav-icon svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon></svg></span><span class="nav-label" data-i18n="nav.qiblah">Qiblah Direction</span>
@@ -170,7 +170,7 @@
         <span class="nav-icon" aria-hidden="true"><svg class="nav-icon svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg></span>
         <select id="sidebarLanguageToggle" class="form-select" style="flex:1; padding: 8px 12px; font-size: var(--text-sm);" aria-label="Select Language" onchange="window.I18nModule.setLanguage(this.value); document.getElementById('languageToggle').value = this.value;">
           <option value="en">English</option>
-          <option value="ta">à®¤à®®à®¿à®´à¯</option>
+          <option value="ta">தமிழ்</option>
         </select>
       </div>
 
@@ -194,13 +194,13 @@
     </div>
   </nav>
 
-  <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• MAIN CONTENT â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
+  <!-- ═══════════════ MAIN CONTENT ═══════════════ -->
   <main class="main-content" id="mainContent">
     
     <!-- Top Header -->
     <header class="app-header">
       <div class="header-left">
-        <button class="menu-toggle" onclick="window.HudaApp.toggleSidebar()" aria-label="Open menu" style="font-size:1.4rem;">â˜°</button>
+        <button class="menu-toggle" onclick="window.HudaApp.toggleSidebar()" aria-label="Open menu" style="font-size:1.4rem;">☰</button>
         <img src="./logo.png" alt="Huda" style="width:34px;height:34px;object-fit:contain;border-radius:8px;margin-right:4px;">
         <div class="header-title" id="headerTitle">Huda</div>
       </div>
@@ -216,7 +216,7 @@
         <div class="hijri-date" id="hijriDateText"></div>
         <select id="languageToggle" class="form-select" style="width: auto; padding: 4px 24px 4px 8px; font-size: var(--text-sm);" aria-label="Select Language" onchange="window.I18nModule.setLanguage(this.value)">
           <option value="en">English</option>
-          <option value="ta">à®¤à®®à®¿à®´à¯</option>
+          <option value="ta">தமிழ்</option>
         </select>
         <button onclick="document.getElementById('prayerSettingsModal').classList.remove('hidden')" class="btn btn-secondary btn-icon sm" aria-label="App Settings" title="App Settings">
           <svg class="nav-icon svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
@@ -225,10 +225,10 @@
       </div>
     </header>
 
-    <!-- â”€â”€â”€â”€â”€â”€â”€â”€ HOME PAGE â”€â”€â”€â”€â”€â”€â”€â”€ -->
+    <!-- ──────── HOME PAGE ──────── -->
     <section id="page-home" class="page-section active">
       <div class="welcome-hero">
-        <div class="welcome-bismillah">Ø¨ÙØ³Ù’Ù…Ù Ø§Ù„Ù„ÙŽÙ‘Ù‡Ù Ø§Ù„Ø±ÙŽÙ‘Ø­Ù’Ù…ÙŽÙ°Ù†Ù Ø§Ù„Ø±ÙŽÙ‘Ø­ÙÙŠÙ…Ù</div>
+        <div class="welcome-bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
         <h2 class="welcome-title">Huda</h2>
         <p class="welcome-subtitle" data-i18n="home.subtitle">Your trusted companion for authentic Islamic guidance.</p>
         
@@ -257,7 +257,7 @@
             <p class="wc-desc">Authentic narrations</p>
           </div>
           <div class="welcome-card" onclick="window.HudaApp.navigateTo('prayer-times')" role="button" tabindex="0">
-            <div class="wc-icon">ðŸ•</div>
+            <div class="wc-icon">🕐</div>
             <h3 class="wc-title" data-i18n="nav.prayerTimes">Prayer Times</h3>
             <p class="wc-desc">Accurate local timings</p>
           </div>
@@ -270,13 +270,13 @@
       </div>
     </section>
 
-    <!-- â”€â”€â”€â”€â”€â”€â”€â”€ QURAN PAGE â”€â”€â”€â”€â”€â”€â”€â”€ -->
+    <!-- ──────── QURAN PAGE ──────── -->
     <section id="page-quran" class="page-section">
       <div class="quran-layout">
         <div class="quran-sidebar">
           <div class="quran-sidebar-header" style="display: flex; justify-content: space-between; align-items: center;">
             <h2 class="page-title" data-i18n="nav.quran" style="margin: 0;">Qur'an Reader</h2>
-            <button class="btn btn-icon mobile-only" onclick="document.querySelector('.quran-sidebar').classList.remove('open')" aria-label="Close index">âœ•</button>
+            <button class="btn btn-icon mobile-only" onclick="document.querySelector('.quran-sidebar').classList.remove('open')" aria-label="Close index">✕</button>
           </div>
           <div class="quran-sidebar-search">
             <span class="search-icon"><svg class="nav-icon svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></span>
@@ -290,19 +290,19 @@
         <div class="quran-reader">
           <div class="quran-mobile-header mobile-only" style="padding-bottom: var(--space-4); margin-bottom: var(--space-4); display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--color-border);">
             <h2 class="page-title" style="margin: 0; font-size: 1.5rem;">Qur'an</h2>
-            <button class="btn btn-sm btn-primary" onclick="document.querySelector('.quran-sidebar').classList.add('open')">â˜° Surahs</button>
+            <button class="btn btn-sm btn-primary" onclick="document.querySelector('.quran-sidebar').classList.add('open')">☰ Surahs</button>
           </div>
           <div class="quran-controls" id="quranControls" style="display: none;">
             <div class="font-controls">
               <button class="btn btn-sm btn-secondary" onclick="window.QuranModule.adjustFont('translation', -1)" aria-label="Decrease translation font">A-</button>
               <button class="btn btn-sm btn-secondary" onclick="window.QuranModule.adjustFont('translation', 1)" aria-label="Increase translation font">A+</button>
               <div class="divider-vertical"></div>
-              <button class="btn btn-sm btn-secondary" onclick="window.QuranModule.adjustFont('arabic', -1)" aria-label="Decrease Arabic font">Ø¹-</button>
-              <button class="btn btn-sm btn-secondary" onclick="window.QuranModule.adjustFont('arabic', 1)" aria-label="Increase Arabic font">Ø¹+</button>
+              <button class="btn btn-sm btn-secondary" onclick="window.QuranModule.adjustFont('arabic', -1)" aria-label="Decrease Arabic font">ع-</button>
+              <button class="btn btn-sm btn-secondary" onclick="window.QuranModule.adjustFont('arabic', 1)" aria-label="Increase Arabic font">ع+</button>
             </div>
             <div class="navigation-controls">
-              <button class="btn btn-sm btn-secondary" onclick="window.QuranModule.prevSurah()">â† Prev</button>
-              <button class="btn btn-sm btn-secondary" onclick="window.QuranModule.nextSurah()">Next â†’</button>
+              <button class="btn btn-sm btn-secondary" onclick="window.QuranModule.prevSurah()">← Prev</button>
+              <button class="btn btn-sm btn-secondary" onclick="window.QuranModule.nextSurah()">Next →</button>
             </div>
           </div>
           
@@ -312,7 +312,7 @@
             <div class="surah-info-bar" id="surahInfoBar"></div>
           </div>
           
-          <div class="bismillah-display" id="bismillahDisplay" style="display: none; font-family: var(--font-arabic); font-size: 2.5rem; text-align: center; margin: var(--space-6) 0; color: var(--color-emerald);">Ø¨ÙØ³Ù’Ù…Ù Ø§Ù„Ù„ÙŽÙ‘Ù‡Ù Ø§Ù„Ø±ÙŽÙ‘Ø­Ù’Ù…ÙŽÙ°Ù†Ù Ø§Ù„Ø±ÙŽÙ‘Ø­ÙÙŠÙ…Ù</div>
+          <div class="bismillah-display" id="bismillahDisplay" style="display: none; font-family: var(--font-arabic); font-size: 2.5rem; text-align: center; margin: var(--space-6) 0; color: var(--color-emerald);">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
           
           <div class="verse-container" id="verseContainer">
             <div class="empty-state">Select a Surah from the list to begin reading.</div>
@@ -321,11 +321,11 @@
       </div>
     </section>
 
-    <!-- â”€â”€â”€â”€â”€â”€â”€â”€ HADITH PAGE â”€â”€â”€â”€â”€â”€â”€â”€ -->
+    <!-- ──────── HADITH PAGE ──────── -->
     <section id="page-hadith" class="page-section">
         <div class="page-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-4);">
           <h2 class="page-title" data-i18n="nav.hadith" style="margin: 0;">Authentic Hadith</h2>
-          <button class="btn btn-sm btn-primary mobile-only" onclick="document.querySelector('.hadith-sidebar').classList.add('open')">â˜° Collections</button>
+          <button class="btn btn-sm btn-primary mobile-only" onclick="document.querySelector('.hadith-sidebar').classList.add('open')">☰ Collections</button>
         </div>
         <div class="search-bar" style="max-width: 400px; margin-bottom: var(--space-6);">
           <span class="search-icon"><svg class="nav-icon svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></span>
@@ -337,7 +337,7 @@
         <div class="hadith-sidebar">
           <div class="quran-sidebar-header mobile-only" style="display: flex; justify-content: space-between; align-items: center;">
             <h3 style="margin: 0; font-size: var(--text-lg); font-weight: 600;">Collections</h3>
-            <button class="btn btn-icon" onclick="document.querySelector('.hadith-sidebar').classList.remove('open')" aria-label="Close index">âœ•</button>
+            <button class="btn btn-icon" onclick="document.querySelector('.hadith-sidebar').classList.remove('open')" aria-label="Close index">✕</button>
           </div>
           <div class="collection-list custom-scrollbar" style="flex: 1; overflow-y: auto;">
             <button class="collection-item active" data-collection="bukhari" onclick="window.HadithModule.loadCollection('bukhari')">
@@ -387,27 +387,27 @@
       </div>
     </section>
 
-    <!-- â”€â”€â”€â”€â”€â”€â”€â”€ PRAYER GUIDE PAGE â”€â”€â”€â”€â”€â”€â”€â”€ -->
+    <!-- ──────── PRAYER GUIDE PAGE ──────── -->
     <section id="page-prayer-guide" class="page-section">
       <div class="page-header text-center">
         <h2 class="page-title" data-i18n="nav.prayerGuide">Prayer Guide</h2>
-        <p class="page-subtitle">Learn the authentic method of Wuá¸Å«' and á¹¢alÄh based on Sahih evidence.</p>
+        <p class="page-subtitle">Learn the authentic method of Wuḍū' and Ṣalāh based on Sahih evidence.</p>
       </div>
       
       <div class="tabs" id="prayerGuideTabs" style="justify-content: center; margin-bottom: var(--space-6);">
-        <button class="tab active" data-guide="wudu" onclick="window.PrayerModule.showGuide('wudu')">Wuá¸Å«' (Ablution)</button>
-        <button class="tab" data-guide="salah" onclick="window.PrayerModule.showGuide('salah')">á¹¢alÄh (Prayer)</button>
+        <button class="tab active" data-guide="wudu" onclick="window.PrayerModule.showGuide('wudu')">Wuḍū' (Ablution)</button>
+        <button class="tab" data-guide="salah" onclick="window.PrayerModule.showGuide('salah')">Ṣalāh (Prayer)</button>
         <button class="tab" data-guide="sunnah" onclick="window.PrayerModule.showGuide('sunnah')">Sunnah Prayers</button>
       </div>
       
       <div id="prayerGuideContent" style="max-width: 800px; margin: 0 auto;"></div>
     </section>
 
-    <!-- â”€â”€â”€â”€â”€â”€â”€â”€ DUAS PAGE â”€â”€â”€â”€â”€â”€â”€â”€ -->
+    <!-- ──────── DUAS PAGE ──────── -->
     <section id="page-duas" class="page-section">
       <div class="page-header flex justify-between items-center">
-        <h2 class="page-title" data-i18n="nav.duas">Authentic Du'Äs</h2>
-        <button class="btn btn-secondary" onclick="window.DuasModule.showCategories()" id="duasBackBtn" style="display: none;">â† Back to Categories</button>
+        <h2 class="page-title" data-i18n="nav.duas">Authentic Du'ās</h2>
+        <button class="btn btn-secondary" onclick="window.DuasModule.showCategories()" id="duasBackBtn" style="display: none;">← Back to Categories</button>
       </div>
       
       <div class="grid grid-3 gap-6" id="duasCategories">
@@ -420,7 +420,7 @@
       </div>
     </section>
 
-    <!-- â”€â”€â”€â”€â”€â”€â”€â”€ DHIKR PAGE â”€â”€â”€â”€â”€â”€â”€â”€ -->
+    <!-- ──────── DHIKR PAGE ──────── -->
     <section id="page-adhkar" class="page-section">
       <div class="page-header text-center">
         <h2 class="page-title" data-i18n="nav.dhikr">Dhikr</h2>
@@ -446,9 +446,9 @@
           <div id="adhkarTranslation" class="verse-translation" style="margin-bottom: var(--space-6);"></div>
           
           <div class="flex justify-between items-center mb-6">
-            <button class="btn btn-secondary" onclick="window.DuasModule.prevDhikr()">â† Prev</button>
+            <button class="btn btn-secondary" onclick="window.DuasModule.prevDhikr()">← Prev</button>
             <div id="adhkarReference" style="font-size: var(--text-sm); color: var(--color-text-muted);"></div>
-            <button class="btn btn-secondary" onclick="window.DuasModule.nextDhikr()">Next â†’</button>
+            <button class="btn btn-secondary" onclick="window.DuasModule.nextDhikr()">Next →</button>
           </div>
 
           <div style="margin-bottom: var(--space-4); display: flex; justify-content: center; gap: 8px;">
@@ -464,13 +464,13 @@
           </div>
           <div class="adhkar-tap-area" onclick="window.DuasModule.incrementCount(event)" style="position: relative; overflow: hidden;">
             <div class="adhkar-count-display" id="adhkarCounter">0</div>
-            <div style="margin-top: var(--space-2); color: var(--color-text-muted); font-size: var(--text-sm);" id="adhkarTarget">Tap to count â€¢ 0 / 1</div>
+            <div style="margin-top: var(--space-2); color: var(--color-text-muted); font-size: var(--text-sm);" id="adhkarTarget">Tap to count • 0 / 1</div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- â”€â”€â”€â”€â”€â”€â”€â”€ PRAYER TIMES PAGE â”€â”€â”€â”€â”€â”€â”€â”€ -->
+    <!-- ──────── PRAYER TIMES PAGE ──────── -->
     <section id="page-prayer-times" class="page-section">
       <div class="page-header text-center" style="display: none;">
         <h2 class="page-title" data-i18n="nav.prayerTimes">Prayer Times</h2>
@@ -508,7 +508,7 @@
       </div>
     </section>
 
-    <!-- â”€â”€â”€â”€â”€â”€â”€â”€ QIBLAH PAGE â”€â”€â”€â”€â”€â”€â”€â”€ -->
+    <!-- ──────── QIBLAH PAGE ──────── -->
     <section id="page-qiblah" class="page-section">
       <div class="page-header text-center">
         <h2 class="page-title" data-i18n="nav.qiblah">Qiblah Direction</h2>
@@ -548,7 +548,7 @@
       </div>
     </section>
 
-    <!-- â”€â”€â”€â”€â”€â”€â”€â”€ ZAKAT PAGE â”€â”€â”€â”€â”€â”€â”€â”€ -->
+    <!-- ──────── ZAKAT PAGE ──────── -->
     <section id="page-zakat" class="page-section">
       <div class="page-header text-center">
         <h2 class="page-title" data-i18n="nav.zakat">Zakat Calculator</h2>
@@ -602,17 +602,17 @@
             <div class="divider"></div>
             
             <div class="result-row mb-4">
-              <span class="label">Niá¹£Äb Status:</span>
-              <span class="value badge badge-muted" id="zakatNisabStatus">Below Niá¹£Äb</span>
+              <span class="label">Niṣāb Status:</span>
+              <span class="value badge badge-muted" id="zakatNisabStatus">Below Niṣāb</span>
             </div>
             
             <div style="background: rgba(16, 185, 129, 0.1); border: 1px solid var(--color-emerald); padding: var(--space-4); border-radius: var(--radius-md);">
               <div style="font-size: var(--text-sm); font-weight: 600; color: var(--color-emerald-light); margin-bottom: var(--space-2);">Total Zakat Due (2.5%)</div>
-              <div style="font-size: var(--text-3xl); font-weight: 700; color: var(--color-emerald);"><span id="zakatAmount">â‚¹0.00</span></div>
+              <div style="font-size: var(--text-3xl); font-weight: 700; color: var(--color-emerald);"><span id="zakatAmount">₹0.00</span></div>
             </div>
             
             <p style="font-size: var(--text-xs); color: var(--color-text-muted); margin-top: var(--space-4);">
-              * Niá¹£Äb is currently estimated. Ensure you check the live price of 85 grams of gold in your local currency.
+              * Niṣāb is currently estimated. Ensure you check the live price of 85 grams of gold in your local currency.
             </p>
           </div>
         </div>
@@ -622,7 +622,7 @@
       </div>
     </section>
 
-    <!-- â”€â”€â”€â”€â”€â”€â”€â”€ RAMADAN PAGE â”€â”€â”€â”€â”€â”€â”€â”€ -->
+    <!-- ──────── RAMADAN PAGE ──────── -->
     <section id="page-ramadan" class="page-section">
       <div class="page-header text-center">
         <h2 class="page-title" data-i18n="nav.ramadan">Ramadan Tools</h2>
@@ -630,7 +630,7 @@
       </div>
 
       <div class="tabs" style="justify-content: center; margin-bottom: var(--space-6);">
-        <button class="tab active" data-ramadan="duas" onclick="window.ToolsModule.showRamadanTab('duas')">Daily Du'Äs</button>
+        <button class="tab active" data-ramadan="duas" onclick="window.ToolsModule.showRamadanTab('duas')">Daily Du'ās</button>
         <button class="tab" data-ramadan="tracker" onclick="window.ToolsModule.showRamadanTab('tracker')">Fasting Tracker</button>
         <button class="tab" data-ramadan="calendar" onclick="window.ToolsModule.showRamadanTab('calendar')">Today's Times</button>
       </div>
@@ -638,15 +638,15 @@
       <div id="ramadanDuas" class="ramadan-tab-content" style="max-width: 800px; margin: 0 auto;">
         <div class="card mb-4">
           <h4 style="font-weight: 600; color: var(--color-emerald-light); margin-bottom: var(--space-4);">Intention for Fasting (Suhoor)</h4>
-          <div class="verse-arabic" style="margin-bottom: var(--space-2);">ÙˆÙŽØ¨ÙØµÙŽÙˆÙ’Ù…Ù ØºÙŽØ¯Ù Ù†ÙŽÙ‘ÙˆÙŽÙŠÙ’ØªÙ Ù…ÙÙ†Ù’ Ø´ÙŽÙ‡Ù’Ø±Ù Ø±ÙŽÙ…ÙŽØ¶ÙŽØ§Ù†ÙŽ</div>
-          <div class="verse-transliteration" style="margin-bottom: var(--space-2);">Wa biá¹£awmi ghadin nawaytu min shahri ramaá¸Än.</div>
+          <div class="verse-arabic" style="margin-bottom: var(--space-2);">وَبِصَوْمِ غَدٍ نَّوَيْتُ مِنْ شَهْرِ رَمَضَانَ</div>
+          <div class="verse-transliteration" style="margin-bottom: var(--space-2);">Wa biṣawmi ghadin nawaytu min shahri ramaḍān.</div>
           <div class="verse-translation">"I intend to keep the fast for tomorrow in the month of Ramadan."</div>
         </div>
         
         <div class="card mb-4">
           <h4 style="font-weight: 600; color: var(--color-emerald-light); margin-bottom: var(--space-4);">Upon Breaking the Fast (Iftar)</h4>
-          <div class="verse-arabic" style="margin-bottom: var(--space-2);">Ø°ÙŽÙ‡ÙŽØ¨ÙŽ Ø§Ù„Ø¸ÙŽÙ‘Ù…ÙŽØ£Ù ÙˆÙŽØ§Ø¨Ù’ØªÙŽÙ„ÙŽÙ‘ØªÙ Ø§Ù„Ù’Ø¹ÙØ±ÙÙˆÙ‚ÙØŒ ÙˆÙŽØ«ÙŽØ¨ÙŽØªÙŽ Ø§Ù„Ø£ÙŽØ¬Ù’Ø±Ù Ø¥ÙÙ†Ù’ Ø´ÙŽØ§Ø¡ÙŽ Ø§Ù„Ù„ÙŽÙ‘Ù‡Ù</div>
-          <div class="verse-transliteration" style="margin-bottom: var(--space-2);">Thahabaáº“-áº“ama'u wabtallatil-'urÅ«qu, wa thabatal-ajru in shÄ'AllÄh.</div>
+          <div class="verse-arabic" style="margin-bottom: var(--space-2);">ذَهَبَ الظَّمَأُ وَابْتَلَّتِ الْعُرُوقُ، وَثَبَتَ الأَجْرُ إِنْ شَاءَ اللَّهُ</div>
+          <div class="verse-transliteration" style="margin-bottom: var(--space-2);">Thahabaẓ-ẓama'u wabtallatil-'urūqu, wa thabatal-ajru in shā'Allāh.</div>
           <div class="verse-translation">"The thirst has gone and the veins are quenched, and reward is confirmed, if Allah wills."</div>
           <div style="font-size: var(--text-sm); color: var(--color-text-muted); margin-top: var(--space-2);">Abu Dawud 2357 (Hasan)</div>
         </div>
@@ -667,13 +667,13 @@
         <div class="card text-center">
           <div class="flex justify-center items-center gap-8 ramadan-countdown">
             <div class="ramadan-unit">
-              <div style="font-size: 3rem; margin-bottom: var(--space-2);">ðŸŒ…</div>
+              <div style="font-size: 3rem; margin-bottom: var(--space-2);">🌅</div>
               <div style="font-size: var(--text-sm); color: var(--color-text-muted); text-transform: uppercase;">Suhoor Ends</div>
               <div class="unit-value" id="suhoorTime" style="font-weight: 700; color: var(--color-emerald-light);">--:--</div>
             </div>
             <div style="width: 1px; height: 80px; background: var(--color-border);"></div>
             <div class="ramadan-unit">
-              <div style="font-size: 3rem; margin-bottom: var(--space-2);">ðŸŒ‡</div>
+              <div style="font-size: 3rem; margin-bottom: var(--space-2);">🌇</div>
               <div style="font-size: var(--text-sm); color: var(--color-text-muted); text-transform: uppercase;">Iftar Time</div>
               <div class="unit-value" id="iftarTime" style="font-weight: 700; color: var(--color-gold-light);">--:--</div>
             </div>
@@ -682,7 +682,7 @@
       </div>
     </section>
 
-    <!-- â”€â”€â”€â”€â”€â”€â”€â”€ SEARCH PAGE â”€â”€â”€â”€â”€â”€â”€â”€ -->
+    <!-- ──────── SEARCH PAGE ──────── -->
     <section id="page-search" class="page-section">
       <div class="page-header text-center">
         <h2 class="page-title" id="searchTitle">Search Results</h2>
@@ -700,18 +700,18 @@
       </div>
     </section>
 
-    <!-- â”€â”€â”€â”€â”€â”€â”€â”€ TRACKER PAGE â”€â”€â”€â”€â”€â”€â”€â”€ -->
+    <!-- ──────── TRACKER PAGE ──────── -->
     <section id="page-tracker" class="page-section">
       <div class="page-header text-center">
-        <h2 class="page-title" data-i18n="tracker.title">Habit Tracker (MuhÄsabah)</h2>
+        <h2 class="page-title" data-i18n="tracker.title">Habit Tracker (Muhāsabah)</h2>
         <p class="page-subtitle" data-i18n="tracker.subtitle">"The most beloved of deeds to Allah are those that are most consistent, even if it is small." (Bukhari)</p>
       </div>
       
       <div class="tracker-layout" style="max-width: 800px; margin: 0 auto;">
         <div class="flex justify-between items-center mb-6">
-          <button class="btn btn-secondary" onclick="window.TrackerModule.changeDate(-1)">â† Prev</button>
+          <button class="btn btn-secondary" onclick="window.TrackerModule.changeDate(-1)">← Prev</button>
           <div id="trackerDateDisplay" style="font-weight: 700; font-size: var(--text-lg); color: var(--color-emerald-light);">Today</div>
-          <button class="btn btn-secondary" onclick="window.TrackerModule.changeDate(1)" id="trackerNextBtn" disabled>Next â†’</button>
+          <button class="btn btn-secondary" onclick="window.TrackerModule.changeDate(1)" id="trackerNextBtn" disabled>Next →</button>
         </div>
         
         <div id="trackerContent"></div>
@@ -720,7 +720,7 @@
 
   </main>
 
-  <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• TOAST CONTAINER â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
+  <!-- ═══════════════ TOAST CONTAINER ═══════════════ -->
   <div class="toast-container" id="toastContainer"></div>
   
   <!-- MODALS -->
@@ -798,7 +798,7 @@
     }
   </style>
   
-  <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• MOBILE BOTTOM NAVIGATION â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
+  <!-- ═══════════════ MOBILE BOTTOM NAVIGATION ═══════════════ -->
   <nav class="bottom-nav" id="bottomNav">
     <button class="bottom-nav-item active" data-page="home" onclick="window.HudaApp.navigateTo('home')">
       <svg class="nav-icon svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
@@ -814,7 +814,7 @@
     </button>
     <button class="bottom-nav-item" data-page="duas" onclick="window.HudaApp.navigateTo('duas')">
       <svg class="nav-icon svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12V8H6a2 2 0 0 1-2-2c0-1.1.9-2 2-2h12v4"></path><path d="M4 6v12c0 1.1.9 2 2 2h14v-4H6a2 2 0 0 1-2-2"></path></svg>
-      <span>Du'Äs</span>
+      <span>Du'ās</span>
     </button>
     <button class="bottom-nav-item" onclick="window.HudaApp.toggleSidebar()">
       <svg class="nav-icon svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
@@ -826,7 +826,7 @@
   <audio id="quranAudioPlayer" style="display:none;"></audio>
   <audio id="adhanAudioPlayer" style="display:none;"></audio>
 
-  <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• SCRIPTS â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
+  <!-- ═══════════════ SCRIPTS ═══════════════ -->
   <script src="js/i18n.js?v=6"></script>
   <script src="js/data.js?v=6"></script>
   <script src="js/api.js?v=6"></script>
