@@ -527,6 +527,201 @@ window.QuranModule = (() => {
     const verseEl = document.getElementById(`verse-${ayahIndex}`);
     if (verseEl) {
       verseEl.style.transition = 'box-shadow 0.3s ease';
+        album: 'Huda - The Guidance',
+        artwork: [
+          { src: './logo.png', sizes: '192x192', type: 'image/png' },
+          { src: './logo.png', sizes: '512x512', type: 'image/png' }
+        ]
+      });
+
+      navigator.mediaSession.setActionHandler('play', () => togglePlaySurah());
+      navigator.mediaSession.setActionHandler('pause', () => pauseAudio());
+      navigator.mediaSession.setActionHandler('previoustrack', () => playPrevAyah());
+      navigator.mediaSession.setActionHandler('nexttrack', () => playNextAyah());
+    }
+  }
+
+  function playAyahIndex(index) {
+    if (!audioUrls || audioUrls.length === 0 || index >= audioUrls.length) return;
+    
+    isPlayingBasmalah = false;
+    currentAyahIndex = index;
+    audioPlayerEl.src = audioUrls[index];
+    audioPlayerEl.play().catch(e => console.error("Audio playback failed", e));
+    
+    // Preload next ayah to eliminate pause
+    if (index + 1 < audioUrls.length) {
+      let preloader = document.getElementById('quranAudioPreloader');
+      if (!preloader) {
+        preloader = document.createElement('audio');
+        preloader.id = 'quranAudioPreloader';
+        preloader.style.display = 'none';
+        document.body.appendChild(preloader);
+      }
+      preloader.src = audioUrls[index + 1];
+      preloader.preload = 'auto';
+    }
+    
+    highlightVerse(index);
+    updatePlayButtonState(true);
+
+    const surahMeta = surahs.find(s => s.number === currentSurahNumber);
+    if (surahMeta) updateMediaSession(surahMeta, index, false);
+    
+    // Auto-save last read progress quietly
+    autoSaveLastRead(currentSurahNumber, index);
+  }
+
+  function pauseAudio() {
+    if (audioPlayerEl) audioPlayerEl.pause();
+  }
+
+  function stopAudio() {
+    if (audioPlayerEl) {
+      audioPlayerEl.pause();
+      audioPlayerEl.currentTime = 0;
+    }
+    isPlaying = false;
+    isPlayingBasmalah = false;
+    currentAyahIndex = 0;
+    updatePlayButtonState(false);
+    highlightVerse(-1);
+  }
+
+  function playNextAyah() {
+    if (isPlayingBasmalah) {
+      isPlayingBasmalah = false;
+      playAyahIndex(0);
+      return;
+    }
+    
+    if (currentAyahIndex < audioUrls.length - 1) {
+      playAyahIndex(currentAyahIndex + 1);
+    } else {
+      // Finished surah
+      stopAudio();
+    }
+  }
+
+  function playPrevAyah() {
+    if (currentAyahIndex > 0) {
+      playAyahIndex(currentAyahIndex - 1);
+    } else {
+      stopAudio();
+    }
+  }
+
+  function highlightVerse(index) {
+    document.querySelectorAll('.verse-card').forEach(el => el.classList.remove('playing'));
+    const bismillahDisplay = document.getElementById('bismillahDisplay');
+    if (bismillahDisplay) bismillahDisplay.style.opacity = '1';
+
+    if (index === -2) {
+      // Highlighting Basmalah
+      if (bismillahDisplay) {
+        bismillahDisplay.style.opacity = '0.5';
+        bismillahDisplay.style.transition = 'opacity 0.3s ease';
+        // Make it glow a bit while playing
+        bismillahDisplay.style.textShadow = '0 0 15px rgba(16, 185, 129, 0.5)';
+      }
+      
+      const stickyName = document.getElementById('audioNowPlaying');
+      const stickyAyah = document.getElementById('audioAyahNumber');
+      if (stickyName) stickyName.textContent = "Bismillah";
+      if (stickyAyah) stickyAyah.textContent = "";
+      
+      const stickyPlayer = document.getElementById('stickyAudioPlayer');
+      if (stickyPlayer) stickyPlayer.style.display = 'block';
+    } else if (index >= 0) {
+      if (bismillahDisplay) bismillahDisplay.style.textShadow = 'none';
+      
+      const el = document.getElementById(`verse-${index}`);
+      if (el) {
+        el.classList.add('playing');
+        el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+      
+      const stickyName = document.getElementById('audioNowPlaying');
+      const stickyAyah = document.getElementById('audioAyahNumber');
+      const surahMeta = surahs.find(s => s.number === currentSurahNumber);
+      if (stickyName && surahMeta) stickyName.textContent = surahMeta.englishName;
+      if (stickyAyah && surahData) stickyAyah.textContent = `Ayah ${surahData[0].ayahs[index].numberInSurah}`;
+      
+      const stickyPlayer = document.getElementById('stickyAudioPlayer');
+      if (stickyPlayer) stickyPlayer.style.display = 'block';
+    } else {
+      const stickyPlayer = document.getElementById('stickyAudioPlayer');
+      if (stickyPlayer) stickyPlayer.style.display = 'none';
+    }
+  }
+
+  // ── Font Size Controls ──
+  function adjustFont(type, change) {
+    const root = document.documentElement;
+    if (type === 'arabic') {
+      const currentSize = parseFloat(getComputedStyle(root).getPropertyValue('--arabic-size'));
+      let newSize = currentSize + (change * 0.25);
+      if (newSize > 3) newSize = 3;
+      if (newSize < 1) newSize = 1;
+      root.style.setProperty('--arabic-size', `${newSize}rem`);
+    } else {
+      const currentSize = parseFloat(getComputedStyle(root).getPropertyValue('--translation-size'));
+      let newSize = currentSize + (change * 0.125);
+      if (newSize > 1.5) newSize = 1.5;
+      if (newSize < 0.75) newSize = 0.75;
+      root.style.setProperty('--translation-size', `${newSize}rem`);
+    }
+  }
+
+  // ── Navigation Controls ──
+  function prevSurah() {
+    if (currentSurahNumber > 1) {
+      loadSurah(currentSurahNumber - 1);
+    }
+  }
+
+  function nextSurah() {
+    if (currentSurahNumber < 114) {
+      loadSurah(currentSurahNumber + 1);
+    }
+  }
+
+  // ── Reload Language ──
+  function reloadLang() {
+    if (currentSurahNumber) {
+      const num = currentSurahNumber;
+      currentSurahNumber = null; // Clear so it fetches again
+      loadSurah(num);
+    }
+    if (surahs.length > 0) {
+      renderSurahList(surahs);
+    }
+  }
+
+  function saveBookmark(surahNumber, ayahIndex) {
+    const bookmark = { surah: surahNumber, ayah: ayahIndex, timestamp: Date.now() };
+    
+    // Save to bookmarks array
+    let bookmarks = [];
+    try {
+      const stored = localStorage.getItem('huda_bookmarks');
+      if (stored) bookmarks = JSON.parse(stored);
+    } catch(e) {}
+    
+    // Check if already exists to avoid duplicates
+    const exists = bookmarks.findIndex(b => b.surah === surahNumber && b.ayah === ayahIndex);
+    if (exists !== -1) {
+      bookmarks.splice(exists, 1); // Remove if exists so we can add it fresh at the top
+    }
+    
+    bookmarks.unshift(bookmark); // Add to beginning
+    localStorage.setItem('huda_bookmarks', JSON.stringify(bookmarks));
+    window.HudaApp.showToast(`Saved Bookmark for Surah ${surahNumber}, Ayah ${ayahIndex + 1}`, 'success');
+    
+    // Provide visual feedback
+    const verseEl = document.getElementById(`verse-${ayahIndex}`);
+    if (verseEl) {
+      verseEl.style.transition = 'box-shadow 0.3s ease';
       verseEl.style.boxShadow = '0 0 20px rgba(16, 185, 129, 0.5)';
       setTimeout(() => verseEl.style.boxShadow = 'none', 1000);
     }
@@ -557,8 +752,23 @@ window.QuranModule = (() => {
     localStorage.setItem('huda_quran_reciter', reciter);
     currentReciter = reciter;
     BASMALAH_AUDIO_URL = getEveryAyahUrl(currentReciter, 1, 1);
-    if (currentSurahNumber) {
-      loadSurah(currentSurahNumber); // Reload with new reciter
+    
+    if (currentSurahNumber && surahData) {
+      // Just update the audio URLs seamlessly without reloading the surah
+      const arabicVerses = surahData[0].ayahs;
+      audioUrls = arabicVerses.map(a => {
+        return getEveryAyahUrl(currentReciter, currentSurahNumber, a.numberInSurah);
+      });
+      
+      // If audio is currently playing, switch immediately to the new reciter for the current Ayah
+      if (isPlaying && audioPlayerEl) {
+        if (isPlayingBasmalah) {
+          audioPlayerEl.src = BASMALAH_AUDIO_URL;
+        } else {
+          audioPlayerEl.src = audioUrls[currentAyahIndex];
+        }
+        audioPlayerEl.play().catch(e => console.error("Playback failed", e));
+      }
     }
   }
 

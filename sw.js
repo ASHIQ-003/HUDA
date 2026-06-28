@@ -1,11 +1,13 @@
-const CACHE_NAME = 'huda-cache-v4';
-const DATA_CACHE_NAME = 'huda-data-cache-v4';
+const CACHE_NAME = 'huda-cache-v6';
+const DATA_CACHE_NAME = 'huda-data-cache-v6';
 
 // App shell files that should be pre-cached
 const FILES_TO_CACHE = [
   '/',
   '/index.html',
-  '/css/style.css',
+  '/css/design-system.css',
+  '/css/components.css',
+  '/css/pages.css',
   '/js/app.js',
   '/js/api.js',
   '/js/i18n.js',
@@ -21,26 +23,29 @@ const FILES_TO_CACHE = [
 ];
 
 self.addEventListener('install', (evt) => {
+  // Force the new SW to activate immediately, replacing the old one
+  self.skipWaiting();
   evt.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
       console.log('[ServiceWorker] Pre-caching app shell');
       return cache.addAll(FILES_TO_CACHE);
     })
   );
-  self.skipWaiting();
 });
 
 self.addEventListener('activate', (evt) => {
+  // Delete ALL old caches on activation
   evt.waitUntil(
     caches.keys().then((keyList) => {
       return Promise.all(keyList.map((key) => {
         if (key !== CACHE_NAME && key !== DATA_CACHE_NAME) {
-          console.log('[ServiceWorker] Removing old cache', key);
+          console.log('[ServiceWorker] Removing old cache:', key);
           return caches.delete(key);
         }
       }));
     })
   );
+  // Take control of all pages immediately
   self.clients.claim();
 });
 
@@ -72,15 +77,17 @@ self.addEventListener('fetch', (evt) => {
     return;
   }
 
-  // App shell fallback (Stale-while-revalidate for local files)
+  // Network-first strategy for app shell (always try fresh, fallback to cache)
   evt.respondWith(
-    caches.match(evt.request).then((response) => {
-      return response || fetch(evt.request).then(fetchRes => {
-        return caches.open(CACHE_NAME).then(cache => {
-          cache.put(evt.request.url, fetchRes.clone());
-          return fetchRes;
-        });
+    fetch(evt.request).then(fetchRes => {
+      // Got a fresh response, update the cache
+      return caches.open(CACHE_NAME).then(cache => {
+        cache.put(evt.request.url, fetchRes.clone());
+        return fetchRes;
       });
+    }).catch(() => {
+      // Network failed, fallback to cache
+      return caches.match(evt.request);
     })
   );
 });

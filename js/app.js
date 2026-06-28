@@ -25,17 +25,35 @@ window.HudaApp = (() => {
   };
 
   // ── Initialize ──
+  let deferredPrompt = null;
+
   function init() {
     // Register Service Worker for PWA (Offline Mode)
     if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('./sw.js').then(reg => {
-          console.log('ServiceWorker registered with scope:', reg.scope);
-        }).catch(err => {
-          console.log('ServiceWorker registration failed:', err);
-        });
+      navigator.serviceWorker.register('./sw.js').then(reg => {
+        console.log('ServiceWorker registered with scope:', reg.scope);
+      }).catch(err => {
+        console.log('ServiceWorker registration failed:', err);
       });
     }
+
+    // Listen for PWA install prompt
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      // Show install buttons
+      document.querySelectorAll('.pwa-install-btn').forEach(btn => {
+        btn.style.display = 'flex';
+      });
+    });
+
+    // Hide install button if already installed
+    window.addEventListener('appinstalled', () => {
+      deferredPrompt = null;
+      document.querySelectorAll('.pwa-install-btn').forEach(btn => {
+        btn.style.display = 'none';
+      });
+    });
 
     // Load Hijri date
     loadHijriDate();
@@ -58,22 +76,79 @@ window.HudaApp = (() => {
       }
     });
 
-    // Register Service Worker for PWA
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('./sw.js').then(registration => {
-          console.log('SW registered: ', registration);
-        }).catch(registrationError => {
-          console.log('SW registration failed: ', registrationError);
-        });
-      });
-    }
-
     // Listen for language changes to re-render dynamic content
     document.addEventListener('languageChanged', () => {
       // Re-trigger the init function for the current page so it re-renders
       triggerPageInit(currentPage, true);
     });
+
+    // Mobile Optimizations
+    setupGestures();
+    setupGlobalHaptics();
+  }
+
+  // ── Mobile Gestures & Haptics ──
+  function triggerHaptic(type = 'light') {
+    if (navigator.vibrate) {
+      if (type === 'light') navigator.vibrate(10);
+      else if (type === 'medium') navigator.vibrate(30);
+      else if (type === 'heavy') navigator.vibrate(50);
+      else if (type === 'success') navigator.vibrate([10, 30, 20]);
+    }
+  }
+
+  function setupGlobalHaptics() {
+    document.addEventListener('click', (e) => {
+      // Avoid haptic on every tiny click, only on interactive UI elements
+      const target = e.target.closest('.btn, .nav-item, .bottom-nav-item, .tab, .collection-item, .surah-item, .adhkar-tap-area');
+      if (target) {
+        if (target.classList.contains('adhkar-tap-area')) {
+           // handled separately or heavy
+        } else {
+          triggerHaptic('light');
+        }
+      }
+    }, {passive: true});
+  }
+
+  function setupGestures() {
+    let touchStartX = 0;
+    let touchEndX = 0;
+    let touchStartY = 0;
+    let touchEndY = 0;
+
+    document.addEventListener('touchstart', e => {
+      touchStartX = e.changedTouches[0].screenX;
+      touchStartY = e.changedTouches[0].screenY;
+    }, {passive: true});
+
+    document.addEventListener('touchend', e => {
+      touchEndX = e.changedTouches[0].screenX;
+      touchEndY = e.changedTouches[0].screenY;
+      handleSwipe();
+    }, {passive: true});
+
+    function handleSwipe() {
+      const diffX = touchEndX - touchStartX;
+      const diffY = touchEndY - touchStartY;
+      
+      // Horizontal swipe dominant
+      if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 60) {
+        if (diffX > 0) {
+          // Swipe Right: Open sidebar if swipe started near left edge
+          if (touchStartX < 50 && !sidebarOpen) {
+            toggleSidebar();
+            triggerHaptic('medium');
+          }
+        } else {
+          // Swipe Left: Close sidebar if open
+          if (sidebarOpen) {
+            toggleSidebar();
+            triggerHaptic('medium');
+          }
+        }
+      }
+    }
   }
 
   // ── Routing ──
@@ -109,8 +184,10 @@ window.HudaApp = (() => {
     }
 
     // Update nav items
-    document.querySelectorAll('.nav-item').forEach(el => {
-      el.classList.toggle('active', el.dataset.page === page);
+    document.querySelectorAll('.nav-item, .bottom-nav-item').forEach(el => {
+      if (el.dataset.page) {
+        el.classList.toggle('active', el.dataset.page === page);
+      }
     });
 
     // Update header title
@@ -253,8 +330,12 @@ window.HudaApp = (() => {
       const hijri = await window.HudaAPI.getHijriDate();
       const text = `${hijri.day} ${hijri.month.en} ${hijri.year} AH`;
       document.getElementById('hijriDateText').textContent = text;
+      const sidebarHijri = document.getElementById('sidebarHijriDate');
+      if (sidebarHijri) sidebarHijri.textContent = text;
     } catch (err) {
       document.getElementById('hijriDateText').textContent = 'Hijri Date';
+      const sidebarHijri = document.getElementById('sidebarHijriDate');
+      if (sidebarHijri) sidebarHijri.textContent = 'Hijri Date';
     }
   }
 
@@ -296,12 +377,33 @@ window.HudaApp = (() => {
     initApp();
   }
 
+  // ── Install App (PWA) ──
+  function installApp() {
+    if (deferredPrompt) {
+      deferredPrompt.prompt();
+      deferredPrompt.userChoice.then((choiceResult) => {
+        if (choiceResult.outcome === 'accepted') {
+          console.log('User accepted the install prompt');
+        }
+        deferredPrompt = null;
+        document.querySelectorAll('.pwa-install-btn').forEach(btn => {
+          btn.style.display = 'none';
+        });
+      });
+    } else {
+      // Fallback message for Safari/iOS
+      showToast('To install: tap the Share button (↑) then "Add to Home Screen"', 'info');
+    }
+  }
+
   // ── Public API ──
   return {
     init,
     navigateTo,
     toggleSidebar,
     showToast,
+    installApp,
+    triggerHaptic,
     getCurrentPage: () => currentPage
   };
 })();
@@ -373,6 +475,8 @@ function initApp() {
     window.I18nModule.init();
     const langToggle = document.getElementById('languageToggle');
     if (langToggle) langToggle.value = window.I18nModule.getLanguage();
+    const sidebarLangToggle = document.getElementById('sidebarLanguageToggle');
+    if (sidebarLangToggle) sidebarLangToggle.value = window.I18nModule.getLanguage();
   }
   
   loadDailyInspiration();

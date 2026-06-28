@@ -251,6 +251,11 @@ window.PrayerModule = (() => {
             if (voice === 'madinah') url = 'https://media.blubrry.com/muslim_central_adhan/content.blubrry.com/muslim_central_adhan/Adhan_Madinah.mp3';
             else if (voice === 'alaqsa') url = 'https://media.blubrry.com/muslim_central_adhan/content.blubrry.com/muslim_central_adhan/Adhan_Al_Aqsa.mp3';
             
+            // Fajr specific adhan
+            if (nextPrayer.name === 'Fajr') {
+              url = 'https://archive.org/download/adhan.recordings.from.doha.qatar/Adhan_Doha_Qatar_01_Fajr_Adhan.mp3';
+            }
+            
             adhanAudio.src = url;
             adhanAudio.play().catch(e => console.error("Adhan play blocked:", e));
             

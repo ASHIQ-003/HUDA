@@ -2,7 +2,7 @@
 <html lang="en" dir="ltr">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0, user-scalable=no">
   <meta name="description" content="Huda — Your trusted companion for authentic Islamic guidance from the Qur'an and Sahih Sunnah.">
   <meta name="theme-color" content="#060b18">
   <link rel="manifest" href="./manifest.json">
@@ -13,9 +13,9 @@
   <title>Huda — Authentic Islam</title>
 
   <!-- ═══════════════ STYLESHEETS ═══════════════ -->
-  <link rel="stylesheet" href="css/design-system.css">
-  <link rel="stylesheet" href="css/components.css">
-  <link rel="stylesheet" href="css/pages.css">
+  <link rel="stylesheet" href="css/design-system.css?v=5">
+  <link rel="stylesheet" href="css/components.css?v=5">
+  <link rel="stylesheet" href="css/pages.css?v=5">
 
   <script>
     window.onerror = function(msg, url, lineNo, columnNo, error) {
@@ -154,6 +154,44 @@
         <span class="nav-icon" aria-hidden="true"><svg class="nav-icon svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg></span><span class="nav-label" data-i18n="nav.ramadan">Ramadan Tools</span>
       </button>
     </div>
+
+    <!-- Sidebar Settings Footer (visible on mobile via Menu) -->
+    <div class="sidebar-settings-footer">
+      <div class="nav-section-title">Settings</div>
+      
+      <!-- Hijri Date -->
+      <div class="sidebar-setting-row">
+        <span class="nav-icon" aria-hidden="true"><svg class="nav-icon svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg></span>
+        <span class="sidebar-hijri-date" id="sidebarHijriDate"></span>
+      </div>
+
+      <!-- Language -->
+      <div class="sidebar-setting-row">
+        <span class="nav-icon" aria-hidden="true"><svg class="nav-icon svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg></span>
+        <select id="sidebarLanguageToggle" class="form-select" style="flex:1; padding: 8px 12px; font-size: var(--text-sm);" aria-label="Select Language" onchange="window.I18nModule.setLanguage(this.value); document.getElementById('languageToggle').value = this.value;">
+          <option value="en">English</option>
+          <option value="ta">தமிழ்</option>
+        </select>
+      </div>
+
+      <!-- Settings & Theme row -->
+      <div class="sidebar-setting-row" style="gap: var(--space-3);">
+        <button onclick="document.getElementById('prayerSettingsModal').classList.remove('hidden'); window.HudaApp.toggleSidebar();" class="btn btn-secondary" style="flex:1; display:flex; align-items:center; justify-content:center; gap:8px;">
+          <svg class="nav-icon svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:18px;height:18px;"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+          Settings
+        </button>
+        <button onclick="window.ThemeModule.toggleTheme()" class="btn btn-secondary" style="flex:1; display:flex; align-items:center; justify-content:center; gap:8px;">
+          <svg class="nav-icon svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px;"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+          Theme
+        </button>
+      </div>
+
+      <!-- Install App button (shown when browser supports PWA install) -->
+      <button class="pwa-install-btn btn btn-primary" onclick="window.HudaApp.installApp()" style="display:none; width:100%; align-items:center; justify-content:center; gap:8px; margin-top: var(--space-3);">
+        <svg class="nav-icon svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+        Install App
+      </button>
+    </div>
   </nav>
 
   <!-- ═══════════════ MAIN CONTENT ═══════════════ -->
@@ -236,8 +274,9 @@
     <section id="page-quran" class="page-section">
       <div class="quran-layout">
         <div class="quran-sidebar">
-          <div class="quran-sidebar-header">
-            <h2 class="page-title" data-i18n="nav.quran">Qur'an Reader</h2>
+          <div class="quran-sidebar-header" style="display: flex; justify-content: space-between; align-items: center;">
+            <h2 class="page-title" data-i18n="nav.quran" style="margin: 0;">Qur'an Reader</h2>
+            <button class="btn btn-icon mobile-only" onclick="document.querySelector('.quran-sidebar').classList.remove('open')" aria-label="Close index">✕</button>
           </div>
           <div class="quran-sidebar-search">
             <span class="search-icon"><svg class="nav-icon svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></span>
@@ -249,6 +288,10 @@
         </div>
         
         <div class="quran-reader">
+          <div class="quran-mobile-header mobile-only" style="padding-bottom: var(--space-4); margin-bottom: var(--space-4); display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--color-border);">
+            <h2 class="page-title" style="margin: 0; font-size: 1.5rem;">Qur'an</h2>
+            <button class="btn btn-sm btn-primary" onclick="document.querySelector('.quran-sidebar').classList.add('open')">☰ Surahs</button>
+          </div>
           <div class="quran-controls" id="quranControls" style="display: none;">
             <div class="font-controls">
               <button class="btn btn-sm btn-secondary" onclick="window.QuranModule.adjustFont('translation', -1)" aria-label="Decrease translation font">A-</button>
@@ -280,17 +323,24 @@
 
     <!-- ──────── HADITH PAGE ──────── -->
     <section id="page-hadith" class="page-section">
-      <div class="page-header">
-        <h2 class="page-title" data-i18n="nav.hadith">Authentic Hadith</h2>
-        <div class="search-bar" style="max-width: 400px;">
+        <div class="page-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-4);">
+          <h2 class="page-title" data-i18n="nav.hadith" style="margin: 0;">Authentic Hadith</h2>
+          <button class="btn btn-sm btn-primary mobile-only" onclick="document.querySelector('.hadith-sidebar').classList.add('open')">☰ Collections</button>
+        </div>
+        <div class="search-bar" style="max-width: 400px; margin-bottom: var(--space-6);">
           <span class="search-icon"><svg class="nav-icon svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></span>
           <input type="text" id="hadithSearch" data-i18n="hadith.search" placeholder="Search Hadiths..." autocomplete="off">
         </div>
       </div>
       
       <div class="hadith-layout">
-        <div class="collection-list custom-scrollbar">
-          <button class="collection-item active" data-collection="bukhari" onclick="window.HadithModule.loadCollection('bukhari')">
+        <div class="hadith-sidebar">
+          <div class="quran-sidebar-header mobile-only" style="display: flex; justify-content: space-between; align-items: center;">
+            <h3 style="margin: 0; font-size: var(--text-lg); font-weight: 600;">Collections</h3>
+            <button class="btn btn-icon" onclick="document.querySelector('.hadith-sidebar').classList.remove('open')" aria-label="Close index">✕</button>
+          </div>
+          <div class="collection-list custom-scrollbar" style="flex: 1; overflow-y: auto;">
+            <button class="collection-item active" data-collection="bukhari" onclick="window.HadithModule.loadCollection('bukhari')">
             <div class="collection-name">Sahih al-Bukhari</div>
             <div class="collection-meta">Authentic (Sahih)</div>
           </button>
@@ -306,6 +356,10 @@
             <div class="collection-name">Jami' at-Tirmidhi</div>
             <div class="collection-meta">Mixed Gradings</div>
           </button>
+          <button class="collection-item" data-collection="nawawi" onclick="window.HadithModule.loadCollection('nawawi')">
+            <div class="collection-name">Imam Nawawi's 40</div>
+            <div class="collection-meta">Essential</div>
+          </button>
           <button class="collection-item" data-collection="nasai" onclick="window.HadithModule.loadCollection('nasai')">
             <div class="collection-name">Sunan an-Nasa'i</div>
             <div class="collection-meta">Mixed Gradings</div>
@@ -319,8 +373,9 @@
             <div class="collection-meta">Early Collection</div>
           </button>
         </div>
+      </div>
         
-        <div class="hadith-reader">
+      <div class="hadith-reader">
           <div class="hadith-header">
             <h3 id="hadithCollectionTitle" style="font-weight: 600;">Sahih al-Bukhari</h3>
             <div id="hadithPagination" class="pagination-controls flex items-center gap-2"></div>
@@ -743,21 +798,45 @@
     }
   </style>
   
+  <!-- ═══════════════ MOBILE BOTTOM NAVIGATION ═══════════════ -->
+  <nav class="bottom-nav" id="bottomNav">
+    <button class="bottom-nav-item active" data-page="home" onclick="window.HudaApp.navigateTo('home')">
+      <svg class="nav-icon svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+      <span>Home</span>
+    </button>
+    <button class="bottom-nav-item" data-page="quran" onclick="window.HudaApp.navigateTo('quran')">
+      <svg class="nav-icon svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+      <span>Qur'an</span>
+    </button>
+    <button class="bottom-nav-item" data-page="hadith" onclick="window.HudaApp.navigateTo('hadith')">
+      <svg class="nav-icon svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
+      <span>Hadith</span>
+    </button>
+    <button class="bottom-nav-item" data-page="duas" onclick="window.HudaApp.navigateTo('duas')">
+      <svg class="nav-icon svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12V8H6a2 2 0 0 1-2-2c0-1.1.9-2 2-2h12v4"></path><path d="M4 6v12c0 1.1.9 2 2 2h14v-4H6a2 2 0 0 1-2-2"></path></svg>
+      <span>Du'ās</span>
+    </button>
+    <button class="bottom-nav-item" onclick="window.HudaApp.toggleSidebar()">
+      <svg class="nav-icon svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+      <span>Menu</span>
+    </button>
+  </nav>
+
   <!-- Audio Element for Qur'an & Adhan -->
   <audio id="quranAudioPlayer" style="display:none;"></audio>
   <audio id="adhanAudioPlayer" style="display:none;"></audio>
 
   <!-- ═══════════════ SCRIPTS ═══════════════ -->
-  <script src="js/i18n.js"></script>
-  <script src="js/data.js"></script>
-  <script src="js/api.js"></script>
-  <script src="js/app.js"></script>
-  <script src="js/quran.js"></script>
-  <script src="js/hadith.js"></script>
-  <script src="js/prayer.js"></script>
-  <script src="js/duas.js"></script>
-  <script src="js/tools.js"></script>
-  <script src="js/search.js"></script>
-  <script src="js/tracker.js"></script>
+  <script src="js/i18n.js?v=5"></script>
+  <script src="js/data.js?v=5"></script>
+  <script src="js/api.js?v=5"></script>
+  <script src="js/app.js?v=5"></script>
+  <script src="js/quran.js?v=5"></script>
+  <script src="js/hadith.js?v=5"></script>
+  <script src="js/prayer.js?v=5"></script>
+  <script src="js/duas.js?v=5"></script>
+  <script src="js/tools.js?v=5"></script>
+  <script src="js/search.js?v=5"></script>
+  <script src="js/tracker.js?v=5"></script>
 </body>
 </html>

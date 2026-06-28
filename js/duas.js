@@ -178,8 +178,12 @@ window.DuasModule = (() => {
     if (currentCount < target || target === Infinity) {
       currentCount++;
       
-      if (navigator.vibrate) {
-        navigator.vibrate(20); // Small haptic tap
+      if (window.HudaApp && window.HudaApp.triggerHaptic) {
+        if (currentCount === target) {
+          window.HudaApp.triggerHaptic('success');
+        } else {
+          window.HudaApp.triggerHaptic('light');
+        }
       }
       
       // Pulse animation
