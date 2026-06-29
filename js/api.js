@@ -230,12 +230,13 @@ window.HudaAPI = (() => {
 
   // ══════════════ HIJRI DATE API ══════════════
 
-  async function getHijriDate() {
+  async function getHijriDate(adjustment = 0) {
     const today = new Date();
     const dateStr = `${today.getDate()}-${today.getMonth() + 1}-${today.getFullYear()}`;
+    const adjParam = adjustment !== 0 ? `&adjustment=${adjustment}` : '';
     const data = await fetchJSON(
-      `${ALADHAN_API}/gToH?date=${dateStr}`,
-      `hijri_${dateStr}`
+      `${ALADHAN_API}/gToH?date=${dateStr}${adjParam}`,
+      `hijri_${dateStr}_adj${adjustment}`
     );
     return data.data.hijri;
   }

@@ -380,6 +380,17 @@ window.PrayerModule = (() => {
     });
     
     const container = document.getElementById('prayerGuideContent');
+    const imamContainer = document.getElementById('imamModeContainer');
+    
+    if (type === 'imam') {
+      container.innerHTML = '';
+      container.style.display = 'none';
+      renderImamSelector();
+      return;
+    }
+    
+    container.style.display = '';
+    if (imamContainer) imamContainer.innerHTML = '';
     container.innerHTML = '';
     
     let content = '';
@@ -584,6 +595,482 @@ window.PrayerModule = (() => {
     localStorage.setItem('huda_adhan_master', val);
   }
 
+  // ══════════════════════════════════════════════════════════════
+  //  IMAM MODE — Full Real-Time Guided Prayer with Speech
+  // ══════════════════════════════════════════════════════════════
+
+  const IMAM_PRAYERS = {
+    fajr:    { name: 'Fajr',    rakahs: 2, silent: false },
+    dhuhr:   { name: 'Dhuhr',   rakahs: 4, silent: true },
+    asr:     { name: 'Asr',     rakahs: 4, silent: true },
+    maghrib: { name: 'Maghrib', rakahs: 3, silent: false },
+    isha:    { name: 'Isha',    rakahs: 4, silent: false },
+    witr:    { name: 'Witr',    rakahs: 3, silent: false }
+  };
+
+  const POSITIONS = {
+    standing:    { emoji: '🧍', label: 'Standing (Qiyām)' },
+    bowing:      { emoji: '🙇', label: 'Bowing (Rukūʿ)' },
+    prostrating: { emoji: '🤲', label: 'Prostrating (Sujūd)' },
+    sitting:     { emoji: '🧎', label: 'Sitting (Julūs)' }
+  };
+
+  // ── Arabic Texts ──
+  const TEXTS = {
+    takbir: {
+      arabic: 'اللَّهُ أَكْبَرُ',
+      translit: 'Allāhu Akbar',
+      translation: 'Allah is the Greatest'
+    },
+    openingDua: {
+      arabic: 'سُبْحَانَكَ اللَّهُمَّ وَبِحَمْدِكَ، وَتَبَارَكَ اسْمُكَ، وَتَعَالَى جَدُّكَ، وَلَا إِلَهَ غَيْرُكَ',
+      translit: "Subḥānaka Allāhumma wa biḥamdika, wa tabāraka-smuka, wa ta'ālā jadduka, wa lā ilāha ghayruk",
+      translation: 'Glory be to You O Allah and praise be to You. Blessed is Your Name and exalted is Your Majesty. There is no god but You.'
+    },
+    taawwudh: {
+      arabic: 'أَعُوذُ بِاللَّهِ مِنَ الشَّيْطَانِ الرَّجِيمِ ﷽',
+      translit: "A'ūdhu billāhi min ash-shayṭānir-rajīm. Bismillāhir-Raḥmānir-Raḥīm",
+      translation: 'I seek refuge in Allah from the accursed Satan. In the Name of Allah, the Most Gracious, the Most Merciful.'
+    },
+    fatiha: {
+      arabic: 'ٱلْحَمْدُ لِلَّهِ رَبِّ ٱلْعَالَمِينَ ﴿٢﴾ ٱلرَّحْمَنِ ٱلرَّحِيمِ ﴿٣﴾ مَالِكِ يَوْمِ ٱلدِّينِ ﴿٤﴾ إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ ﴿٥﴾ ٱهْدِنَا ٱلصِّرَاطَ ٱلْمُسْتَقِيمَ ﴿٦﴾ صِرَاطَ ٱلَّذِينَ أَنْعَمْتَ عَلَيْهِمْ غَيْرِ ٱلْمَغْضُوبِ عَلَيْهِمْ وَلَا ٱلضَّآلِّينَ ﴿٧﴾',
+      translit: "Al-ḥamdu lillāhi Rabbil-'ālamīn. Ar-Raḥmānir-Raḥīm. Māliki yawmid-dīn. Iyyāka na'budu wa iyyāka nasta'īn. Ihdinaṣ-ṣirāṭal-mustaqīm. Ṣirāṭalladhīna an'amta 'alayhim, ghayril-maghḍūbi 'alayhim wa laḍ-ḍāllīn.",
+      translation: 'All praise is due to Allah, Lord of the worlds. The Most Gracious, the Most Merciful. Master of the Day of Judgment. You alone we worship, and You alone we ask for help. Guide us to the straight path. The path of those whom You have blessed, not of those who earned Your anger, nor of those who went astray.'
+    },
+    ameen: {
+      arabic: 'آمِين',
+      translit: 'Āmīn',
+      translation: 'O Allah, accept our prayer'
+    },
+    ikhlas: {
+      arabic: 'قُلْ هُوَ ٱللَّهُ أَحَدٌ ﴿١﴾ ٱللَّهُ ٱلصَّمَدُ ﴿٢﴾ لَمْ يَلِدْ وَلَمْ يُولَدْ ﴿٣﴾ وَلَمْ يَكُن لَّهُ كُفُوًا أَحَدٌ ﴿٤﴾',
+      translit: "Qul Huwallāhu Aḥad. Allāhuṣ-Ṣamad. Lam yalid wa lam yūlad. Wa lam yakun lahu kufuwan aḥad.",
+      translation: 'Say: He is Allah, the One. Allah, the Eternal Refuge. He neither begets nor is born. Nor is there to Him any equivalent.'
+    },
+    rukuDua: {
+      arabic: 'سُبْحَانَ رَبِّيَ الْعَظِيمِ، سُبْحَانَ رَبِّيَ الْعَظِيمِ، سُبْحَانَ رَبِّيَ الْعَظِيمِ',
+      translit: "Subḥāna Rabbiyal-'Aẓīm (×3)",
+      translation: 'Glory be to my Lord, the Most Great (×3)'
+    },
+    risingFromRuku: {
+      arabic: 'سَمِعَ اللَّهُ لِمَنْ حَمِدَهُ، رَبَّنَا وَلَكَ الْحَمْدُ',
+      translit: "Sami'allāhu liman ḥamidah. Rabbanā wa lakal-ḥamd",
+      translation: 'Allah hears whoever praises Him. Our Lord, to You be all praise.'
+    },
+    sujudDua: {
+      arabic: 'سُبْحَانَ رَبِّيَ الأَعْلَى، سُبْحَانَ رَبِّيَ الأَعْلَى، سُبْحَانَ رَبِّيَ الأَعْلَى',
+      translit: "Subḥāna Rabbiyal-A'lā (×3)",
+      translation: 'Glory be to my Lord, the Most High (×3)'
+    },
+    sittingBetweenSujud: {
+      arabic: 'رَبِّ اغْفِرْ لِي، رَبِّ اغْفِرْ لِي',
+      translit: 'Rabbighfir lī, Rabbighfir lī',
+      translation: 'My Lord, forgive me. My Lord, forgive me.'
+    },
+    tashahhud: {
+      arabic: 'التَّحِيَّاتُ لِلَّهِ وَالصَّلَوَاتُ وَالطَّيِّبَاتُ، السَّلاَمُ عَلَيْكَ أَيُّهَا النَّبِيُّ وَرَحْمَةُ اللَّهِ وَبَرَكَاتُهُ، السَّلاَمُ عَلَيْنَا وَعَلَى عِبَادِ اللَّهِ الصَّالِحِينَ، أَشْهَدُ أَنْ لاَ إِلَهَ إِلاَّ اللَّهُ وَأَشْهَدُ أَنَّ مُحَمَّدًا عَبْدُهُ وَرَسُولُهُ',
+      translit: "At-Taḥiyyātu lillāhi waṣ-ṣalawātu waṭ-ṭayyibāt. As-salāmu 'alayka ayyuhan-Nabiyyu wa raḥmatullāhi wa barakātuh. As-salāmu 'alaynā wa 'alā 'ibādillāhiṣ-ṣāliḥīn. Ash-hadu an lā ilāha illallāh, wa ash-hadu anna Muḥammadan 'abduhu wa rasūluh.",
+      translation: 'All greetings, prayers, and good deeds are for Allah. Peace be upon you, O Prophet, and the mercy of Allah and His blessings. Peace be upon us and upon the righteous servants of Allah. I bear witness that there is no god but Allah, and I bear witness that Muhammad is His servant and Messenger.'
+    },
+    salawat: {
+      arabic: 'اللَّهُمَّ صَلِّ عَلَى مُحَمَّدٍ وَعَلَى آلِ مُحَمَّدٍ كَمَا صَلَّيْتَ عَلَى إِبْرَاهِيمَ وَعَلَى آلِ إِبْرَاهِيمَ إِنَّكَ حَمِيدٌ مَجِيدٌ، اللَّهُمَّ بَارِكْ عَلَى مُحَمَّدٍ وَعَلَى آلِ مُحَمَّدٍ كَمَا بَارَكْتَ عَلَى إِبْرَاهِيمَ وَعَلَى آلِ إِبْرَاهِيمَ إِنَّكَ حَمِيدٌ مَجِيدٌ',
+      translit: "Allāhumma ṣalli 'alā Muḥammadin wa 'alā āli Muḥammad, kamā ṣallayta 'alā Ibrāhīma wa 'alā āli Ibrāhīm, innaka Ḥamīdun Majīd. Allāhumma bārik 'alā Muḥammadin wa 'alā āli Muḥammad, kamā bārakta 'alā Ibrāhīma wa 'alā āli Ibrāhīm, innaka Ḥamīdun Majīd.",
+      translation: 'O Allah, send blessings upon Muhammad and upon the family of Muhammad, as You sent blessings upon Ibrahim and the family of Ibrahim. Indeed You are Praiseworthy, Glorious. O Allah, bless Muhammad and the family of Muhammad, as You blessed Ibrahim and the family of Ibrahim. Indeed You are Praiseworthy, Glorious.'
+    },
+    duaBeforeSalam: {
+      arabic: 'اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنْ عَذَابِ جَهَنَّمَ، وَمِنْ عَذَابِ الْقَبْرِ، وَمِنْ فِتْنَةِ الْمَحْيَا وَالْمَمَاتِ، وَمِنْ شَرِّ فِتْنَةِ الْمَسِيحِ الدَّجَّالِ',
+      translit: "Allāhumma innī a'ūdhu bika min 'adhābi Jahannam, wa min 'adhābil-qabr, wa min fitnatil-maḥyā wal-mamāt, wa min sharri fitnatil-Masīḥid-Dajjāl.",
+      translation: 'O Allah, I seek refuge in You from the punishment of Hellfire, from the punishment of the grave, from the trials of life and death, and from the evil of the trial of the False Messiah.'
+    },
+    tasleemRight: {
+      arabic: 'السَّلاَمُ عَلَيْكُمْ وَرَحْمَةُ اللَّهِ',
+      translit: "As-salāmu 'alaykum wa raḥmatullāh",
+      translation: 'Peace and mercy of Allah be upon you (turning right)'
+    },
+    tasleemLeft: {
+      arabic: 'السَّلاَمُ عَلَيْكُمْ وَرَحْمَةُ اللَّهِ',
+      translit: "As-salāmu 'alaykum wa raḥmatullāh",
+      translation: 'Peace and mercy of Allah be upon you (turning left)'
+    }
+  };
+
+  // Speed multipliers (base durations in ms)
+  const IMAM_SPEEDS = { slow: 1.6, medium: 1.0, fast: 0.6 };
+  let imamSpeed = 'medium';
+
+  // Imam state
+  let imamState = {
+    active: false,
+    paused: false,
+    prayer: null,
+    steps: [],
+    currentStep: 0,
+    timer: null,
+    overlay: null
+  };
+
+  // ── Build prayer steps for a given prayer ──
+  function buildPrayerSteps(prayerKey) {
+    const prayer = IMAM_PRAYERS[prayerKey];
+    const steps = [];
+    const totalRakahs = prayer.rakahs;
+    const isSilentPrayer = prayer.silent; // Dhuhr/Asr fully silent
+
+    for (let r = 1; r <= totalRakahs; r++) {
+      const isFirst = r === 1;
+      const isLastRakah = r === totalRakahs;
+      const isFirstTwo = r <= 2;
+      // Silent in rak'ahs 3+ for loud prayers, or ALL rak'ahs for Dhuhr/Asr
+      const isSilent = isSilentPrayer || r > 2;
+
+      // 1. Takbiratul Ihram (only rak'ah 1)
+      if (isFirst) {
+        steps.push({ rakah: r, title: 'Takbīratul Iḥrām', position: 'standing', text: TEXTS.takbir, duration: 3000, silent: false });
+      } else {
+        // Standing takbir for subsequent rak'ahs
+        steps.push({ rakah: r, title: `Rak'ah ${r} — Rising with Takbīr`, position: 'standing', text: TEXTS.takbir, duration: 2500, silent: false });
+      }
+
+      // 2. Opening Dua (only rak'ah 1)
+      if (isFirst) {
+        steps.push({ rakah: r, title: 'Opening Supplication (Duʿāʾ al-Istiftāḥ)', position: 'standing', text: TEXTS.openingDua, duration: 10000, silent: isSilent });
+      }
+
+      // 3. Ta'awwudh + Bismillah
+      steps.push({ rakah: r, title: "Ta'awwudh & Bismillāh", position: 'standing', text: TEXTS.taawwudh, duration: 6000, silent: isSilent });
+
+      // 4. Surah Al-Fatiha
+      steps.push({ rakah: r, title: 'Sūrah Al-Fātiḥah', position: 'standing', text: TEXTS.fatiha, duration: 18000, silent: isSilent });
+
+      // Ameen after Fatiha
+      steps.push({ rakah: r, title: 'Āmīn', position: 'standing', text: TEXTS.ameen, duration: 2500, silent: isSilent });
+
+      // 5. Additional Surah (only rak'ahs 1 & 2)
+      if (isFirstTwo) {
+        steps.push({ rakah: r, title: 'Sūrah Al-Ikhlāṣ', position: 'standing', text: TEXTS.ikhlas, duration: 10000, silent: isSilent });
+      }
+
+      // 6. Takbir for Ruku
+      steps.push({ rakah: r, title: 'Takbīr — Going to Rukūʿ', position: 'standing', text: TEXTS.takbir, duration: 2500, silent: false });
+
+      // 7. Ruku
+      steps.push({ rakah: r, title: 'Rukūʿ (Bowing)', position: 'bowing', text: TEXTS.rukuDua, duration: 8000, silent: false });
+
+      // 8. Rising from Ruku
+      steps.push({ rakah: r, title: 'Rising from Rukūʿ', position: 'standing', text: TEXTS.risingFromRuku, duration: 5000, silent: false });
+
+      // 9. Takbir for first Sujud
+      steps.push({ rakah: r, title: 'Takbīr — Going to Sujūd', position: 'standing', text: TEXTS.takbir, duration: 2500, silent: false });
+
+      // 10. First Sujud
+      steps.push({ rakah: r, title: 'First Sujūd (Prostration)', position: 'prostrating', text: TEXTS.sujudDua, duration: 8000, silent: false });
+
+      // 11. Sitting between sujud
+      steps.push({ rakah: r, title: 'Sitting between Sujūd', position: 'sitting', text: TEXTS.sittingBetweenSujud, duration: 5000, silent: false });
+
+      // 12. Second Sujud
+      steps.push({ rakah: r, title: 'Second Sujūd (Prostration)', position: 'prostrating', text: TEXTS.sujudDua, duration: 8000, silent: false });
+
+      // 13. Tashahhud (after 2nd rak'ah and final rak'ah)
+      const needsTashahhud = (r === 2 && totalRakahs > 2) || isLastRakah;
+      if (needsTashahhud) {
+        steps.push({ rakah: r, title: 'Tashahhud (At-Taḥiyyāt)', position: 'sitting', text: TEXTS.tashahhud, duration: 15000, silent: false });
+      }
+
+      // 14. Final rak'ah extras
+      if (isLastRakah) {
+        steps.push({ rakah: r, title: 'Ṣalawāt upon the Prophet ﷺ', position: 'sitting', text: TEXTS.salawat, duration: 16000, silent: false });
+        steps.push({ rakah: r, title: 'Duʿāʾ before Salām', position: 'sitting', text: TEXTS.duaBeforeSalam, duration: 12000, silent: false });
+        steps.push({ rakah: r, title: 'Taslīm — Turning Right', position: 'sitting', text: TEXTS.tasleemRight, duration: 4000, silent: false });
+        steps.push({ rakah: r, title: 'Taslīm — Turning Left', position: 'sitting', text: TEXTS.tasleemLeft, duration: 4000, silent: false });
+      }
+    }
+    return steps;
+  }
+
+  // ── Render prayer selector ──
+  function renderImamSelector() {
+    const container = document.getElementById('imamModeContainer');
+    if (!container) return;
+
+    const prayers = [
+      { key: 'fajr',    emoji: '🌅', label: 'Fajr',    info: '2 Rak\'ahs' },
+      { key: 'dhuhr',   emoji: '☀️', label: 'Dhuhr',   info: '4 Rak\'ahs' },
+      { key: 'asr',     emoji: '🌤️', label: 'Asr',     info: '4 Rak\'ahs' },
+      { key: 'maghrib', emoji: '🌅', label: 'Maghrib', info: '3 Rak\'ahs' },
+      { key: 'isha',    emoji: '🌙', label: 'Isha',    info: '4 Rak\'ahs' },
+      { key: 'witr',    emoji: '🤲', label: 'Witr',    info: '3 Rak\'ahs' }
+    ];
+
+    container.innerHTML = `
+      <div class="imam-selector">
+        <div class="imam-selector-title">🕌 Imam Mode</div>
+        <div class="imam-selector-subtitle">Select a prayer to begin a full guided recitation experience with voice.</div>
+        <div class="imam-prayer-grid">
+          ${prayers.map(p => `
+            <button class="imam-prayer-option" onclick="window.PrayerModule.startImamPrayer('${p.key}')">
+              <span class="prayer-emoji">${p.emoji}</span>
+              <span class="prayer-label">${p.label}</span>
+              <span class="prayer-rakah">${p.info}</span>
+            </button>
+          `).join('')}
+        </div>
+        <div class="imam-speed-selector">
+          <label>⏱ Speed:</label>
+          <button class="imam-speed-btn${imamSpeed === 'slow' ? ' active' : ''}" onclick="window.PrayerModule.setImamSpeed('slow')">Slow</button>
+          <button class="imam-speed-btn${imamSpeed === 'medium' ? ' active' : ''}" onclick="window.PrayerModule.setImamSpeed('medium')">Medium</button>
+          <button class="imam-speed-btn${imamSpeed === 'fast' ? ' active' : ''}" onclick="window.PrayerModule.setImamSpeed('fast')">Fast</button>
+        </div>
+      </div>
+    `;
+  }
+
+  function setImamSpeed(speed) {
+    imamSpeed = speed;
+    // Re-render selector to update active state
+    renderImamSelector();
+  }
+
+  // ── Start Imam Prayer ──
+  function startImamPrayer(prayerKey) {
+    const prayer = IMAM_PRAYERS[prayerKey];
+    if (!prayer) return;
+
+    imamState = {
+      active: true,
+      paused: false,
+      prayer: prayer,
+      prayerKey: prayerKey,
+      steps: buildPrayerSteps(prayerKey),
+      currentStep: 0,
+      timer: null,
+      overlay: null
+    };
+
+    createImamOverlay();
+    renderImamStep();
+    scheduleNextStep();
+  }
+
+  // ── Create the full-screen overlay ──
+  function createImamOverlay() {
+    // Remove any existing overlay
+    const existing = document.getElementById('imamOverlay');
+    if (existing) existing.remove();
+
+    const overlay = document.createElement('div');
+    overlay.id = 'imamOverlay';
+    overlay.className = 'imam-overlay';
+    overlay.innerHTML = `
+      <div class="imam-topbar">
+        <div class="imam-prayer-name">🕌 ${imamState.prayer.name}</div>
+        <div class="imam-rakah-info" id="imamRakahInfo">Rak'ah 1 of ${imamState.prayer.rakahs}</div>
+        <button class="imam-stop-btn" onclick="window.PrayerModule.stopImamPrayer()">✕ Stop</button>
+      </div>
+      <div class="imam-content" id="imamContent">
+        <!-- Step content rendered dynamically -->
+      </div>
+      <div class="imam-progress-area">
+        <div class="imam-progress-bar-container">
+          <div class="imam-progress-bar" id="imamProgressBar" style="width: 0%"></div>
+        </div>
+        <div class="imam-step-counter" id="imamStepCounter">Step 1 of ${imamState.steps.length}</div>
+      </div>
+      <div class="imam-controls">
+        <button class="imam-ctrl-btn" id="imamPrevBtn" onclick="window.PrayerModule.imamPrev()" title="Previous">⏮</button>
+        <button class="imam-ctrl-btn primary" id="imamPlayPauseBtn" onclick="window.PrayerModule.imamTogglePause()" title="Pause">⏸</button>
+        <button class="imam-ctrl-btn" id="imamNextBtn" onclick="window.PrayerModule.imamNext()" title="Next">⏭</button>
+      </div>
+    `;
+
+    document.body.appendChild(overlay);
+    imamState.overlay = overlay;
+
+    // Prevent background scroll
+    document.body.style.overflow = 'hidden';
+  }
+
+  // ── Render current step ──
+  function renderImamStep() {
+    if (!imamState.active) return;
+    const step = imamState.steps[imamState.currentStep];
+    if (!step) { finishImamPrayer(); return; }
+
+    const content = document.getElementById('imamContent');
+    const pos = POSITIONS[step.position] || POSITIONS.standing;
+
+    const silentBadge = step.silent ?
+      '<div class="imam-silent-badge">🔇 Recited silently</div>' : '';
+
+    // Animate transition
+    content.classList.add('stepping');
+    setTimeout(() => {
+      content.innerHTML = `
+        <div class="imam-position">${pos.emoji}</div>
+        <div class="imam-position-label">${pos.label}</div>
+        <div class="imam-step-title">${step.title}</div>
+        ${silentBadge}
+        <div class="imam-arabic">${step.text.arabic}</div>
+        <div class="imam-transliteration">${step.text.translit}</div>
+        <div class="imam-translation">${step.text.translation}</div>
+      `;
+      content.classList.remove('stepping');
+    }, 200);
+
+    // Update rak'ah info
+    const rakahInfo = document.getElementById('imamRakahInfo');
+    if (rakahInfo) rakahInfo.textContent = `Rak'ah ${step.rakah} of ${imamState.prayer.rakahs}`;
+
+    // Update progress
+    const pct = ((imamState.currentStep + 1) / imamState.steps.length) * 100;
+    const bar = document.getElementById('imamProgressBar');
+    if (bar) bar.style.width = pct + '%';
+    const counter = document.getElementById('imamStepCounter');
+    if (counter) counter.textContent = `Step ${imamState.currentStep + 1} of ${imamState.steps.length}`;
+
+    // Update prev button state
+    const prevBtn = document.getElementById('imamPrevBtn');
+    if (prevBtn) prevBtn.disabled = imamState.currentStep === 0;
+
+    // Speak Arabic text if not silent
+    if (!step.silent) {
+      speakArabic(step.text.arabic);
+    }
+  }
+
+  // ── Speech Synthesis ──
+  function speakArabic(text) {
+    if (!window.speechSynthesis) return;
+    window.speechSynthesis.cancel();
+
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = 'ar-SA';
+    utterance.rate = imamSpeed === 'slow' ? 0.7 : imamSpeed === 'fast' ? 1.0 : 0.85;
+    utterance.pitch = 0.95;
+    utterance.volume = 1;
+
+    // Try to find an Arabic voice
+    const voices = window.speechSynthesis.getVoices();
+    const arabicVoice = voices.find(v => v.lang && v.lang.startsWith('ar'));
+    if (arabicVoice) utterance.voice = arabicVoice;
+
+    window.speechSynthesis.speak(utterance);
+  }
+
+  // ── Timer / auto-advance ──
+  function scheduleNextStep() {
+    if (!imamState.active || imamState.paused) return;
+    clearTimeout(imamState.timer);
+
+    const step = imamState.steps[imamState.currentStep];
+    if (!step) return;
+
+    const duration = Math.round(step.duration * IMAM_SPEEDS[imamSpeed]);
+    imamState.timer = setTimeout(() => {
+      if (!imamState.active || imamState.paused) return;
+      imamState.currentStep++;
+      if (imamState.currentStep >= imamState.steps.length) {
+        finishImamPrayer();
+      } else {
+        renderImamStep();
+        scheduleNextStep();
+      }
+    }, duration);
+  }
+
+  // ── Controls ──
+  function imamTogglePause() {
+    if (!imamState.active) return;
+    imamState.paused = !imamState.paused;
+
+    const btn = document.getElementById('imamPlayPauseBtn');
+    if (imamState.paused) {
+      clearTimeout(imamState.timer);
+      window.speechSynthesis && window.speechSynthesis.pause();
+      if (btn) btn.innerHTML = '▶️';
+    } else {
+      window.speechSynthesis && window.speechSynthesis.resume();
+      if (btn) btn.innerHTML = '⏸';
+      scheduleNextStep();
+    }
+  }
+
+  function imamNext() {
+    if (!imamState.active) return;
+    clearTimeout(imamState.timer);
+    window.speechSynthesis && window.speechSynthesis.cancel();
+
+    imamState.currentStep++;
+    if (imamState.currentStep >= imamState.steps.length) {
+      finishImamPrayer();
+    } else {
+      renderImamStep();
+      if (!imamState.paused) scheduleNextStep();
+    }
+  }
+
+  function imamPrev() {
+    if (!imamState.active || imamState.currentStep === 0) return;
+    clearTimeout(imamState.timer);
+    window.speechSynthesis && window.speechSynthesis.cancel();
+
+    imamState.currentStep--;
+    renderImamStep();
+    if (!imamState.paused) scheduleNextStep();
+  }
+
+  function stopImamPrayer() {
+    imamState.active = false;
+    clearTimeout(imamState.timer);
+    window.speechSynthesis && window.speechSynthesis.cancel();
+
+    const overlay = document.getElementById('imamOverlay');
+    if (overlay) {
+      overlay.style.animation = 'none';
+      overlay.style.opacity = '0';
+      overlay.style.transition = 'opacity 0.3s ease';
+      setTimeout(() => overlay.remove(), 300);
+    }
+    document.body.style.overflow = '';
+  }
+
+  function finishImamPrayer() {
+    imamState.active = false;
+    clearTimeout(imamState.timer);
+    window.speechSynthesis && window.speechSynthesis.cancel();
+
+    const content = document.getElementById('imamContent');
+    if (content) {
+      content.innerHTML = `
+        <div class="imam-complete">
+          <div class="imam-complete-icon">🕌</div>
+          <div class="imam-complete-title">Prayer Complete</div>
+          <div class="imam-complete-subtitle">
+            May Allah accept your ${imamState.prayer.name} prayer.<br>
+            <em>Taqabbal Allāhu minnā wa minkum</em>
+          </div>
+          <button class="imam-complete-btn" onclick="window.PrayerModule.stopImamPrayer()">✓ Close</button>
+        </div>
+      `;
+    }
+
+    // Update progress to 100%
+    const bar = document.getElementById('imamProgressBar');
+    if (bar) bar.style.width = '100%';
+    const counter = document.getElementById('imamStepCounter');
+    if (counter) counter.textContent = 'Complete!';
+
+    // Hide controls
+    const controls = imamState.overlay && imamState.overlay.querySelector('.imam-controls');
+    if (controls) controls.style.display = 'none';
+  }
+
+  // Pre-load voices (needed for some browsers)
+  if (window.speechSynthesis) {
+    window.speechSynthesis.getVoices();
+    window.speechSynthesis.onvoiceschanged = () => window.speechSynthesis.getVoices();
+  }
+
   return {
     initPrayerTimes,
     refreshPrayerTimes,
@@ -594,6 +1081,12 @@ window.PrayerModule = (() => {
     toggleAlarm,
     stopAdhan,
     changeAdhanVoice,
-    toggleMasterAdhan
+    toggleMasterAdhan,
+    startImamPrayer,
+    stopImamPrayer,
+    setImamSpeed,
+    imamTogglePause,
+    imamNext,
+    imamPrev
   };
 })();

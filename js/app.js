@@ -327,16 +327,25 @@ window.HudaApp = (() => {
   // ── Hijri Date ──
   async function loadHijriDate() {
     try {
-      const hijri = await window.HudaAPI.getHijriDate();
+      const adjustment = parseInt(localStorage.getItem('huda_hijri_adjustment') || '0');
+      const hijri = await window.HudaAPI.getHijriDate(adjustment);
       const text = `${hijri.day} ${hijri.month.en} ${hijri.year} AH`;
       document.getElementById('hijriDateText').textContent = text;
       const sidebarHijri = document.getElementById('sidebarHijriDate');
       if (sidebarHijri) sidebarHijri.textContent = text;
+      // Restore saved adjustment in modal dropdown
+      const adjSelect = document.getElementById('hijriAdjustment');
+      if (adjSelect) adjSelect.value = adjustment.toString();
     } catch (err) {
       document.getElementById('hijriDateText').textContent = 'Hijri Date';
       const sidebarHijri = document.getElementById('sidebarHijriDate');
       if (sidebarHijri) sidebarHijri.textContent = 'Hijri Date';
     }
+  }
+
+  function setHijriAdjustment(val) {
+    localStorage.setItem('huda_hijri_adjustment', val.toString());
+    loadHijriDate();
   }
 
   // ── Global Search ──
@@ -404,6 +413,7 @@ window.HudaApp = (() => {
     showToast,
     installApp,
     triggerHaptic,
+    setHijriAdjustment,
     getCurrentPage: () => currentPage
   };
 })();
@@ -442,7 +452,11 @@ window.ThemeModule = (() => {
     setTheme(currentTheme);
   }
 
-  return { init, setTheme, toggleTheme, getCurrentTheme: () => currentTheme };
+  function setThemeFromModal(theme) {
+    setTheme(theme);
+  }
+
+  return { init, setTheme, toggleTheme, setThemeFromModal, getCurrentTheme: () => currentTheme };
 })();
 
 async function loadDailyInspiration() {
@@ -471,12 +485,18 @@ async function loadDailyInspiration() {
 
 function initApp() {
   window.ThemeModule.init();
+  // Sync modal theme dropdown
+  const themeSelect = document.getElementById('modalThemeToggle');
+  if (themeSelect) themeSelect.value = window.ThemeModule.getCurrentTheme();
   if (window.I18nModule) {
     window.I18nModule.init();
+    const lang = window.I18nModule.getLanguage();
     const langToggle = document.getElementById('languageToggle');
-    if (langToggle) langToggle.value = window.I18nModule.getLanguage();
+    if (langToggle) langToggle.value = lang;
     const sidebarLangToggle = document.getElementById('sidebarLanguageToggle');
-    if (sidebarLangToggle) sidebarLangToggle.value = window.I18nModule.getLanguage();
+    if (sidebarLangToggle) sidebarLangToggle.value = lang;
+    const modalLangToggle = document.getElementById('modalLanguageToggle');
+    if (modalLangToggle) modalLangToggle.value = lang;
   }
   
   loadDailyInspiration();

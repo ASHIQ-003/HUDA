@@ -165,24 +165,11 @@
         <span class="sidebar-hijri-date" id="sidebarHijriDate"></span>
       </div>
 
-      <!-- Language -->
-      <div class="sidebar-setting-row">
-        <span class="nav-icon" aria-hidden="true"><svg class="nav-icon svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg></span>
-        <select id="sidebarLanguageToggle" class="form-select" style="flex:1; padding: 8px 12px; font-size: var(--text-sm);" aria-label="Select Language" onchange="window.I18nModule.setLanguage(this.value); document.getElementById('languageToggle').value = this.value;">
-          <option value="en">English</option>
-          <option value="ta">தமிழ்</option>
-        </select>
-      </div>
-
-      <!-- Settings & Theme row -->
+      <!-- Open Settings Modal -->
       <div class="sidebar-setting-row" style="gap: var(--space-3);">
         <button onclick="document.getElementById('prayerSettingsModal').classList.remove('hidden'); window.HudaApp.toggleSidebar();" class="btn btn-secondary" style="flex:1; display:flex; align-items:center; justify-content:center; gap:8px;">
           <svg class="nav-icon svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:18px;height:18px;"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
-          Settings
-        </button>
-        <button onclick="window.ThemeModule.toggleTheme()" class="btn btn-secondary" style="flex:1; display:flex; align-items:center; justify-content:center; gap:8px;">
-          <svg class="nav-icon svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px;"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
-          Theme
+          All Settings
         </button>
       </div>
       
@@ -220,14 +207,14 @@
       
       <div class="header-right">
         <div class="hijri-date" id="hijriDateText"></div>
-        <select id="languageToggle" class="form-select" style="width: auto; padding: 4px 24px 4px 8px; font-size: var(--text-sm);" aria-label="Select Language" onchange="window.I18nModule.setLanguage(this.value)">
+        <select id="languageToggle" class="form-select header-desktop-only" style="width: auto; padding: 4px 24px 4px 8px; font-size: var(--text-sm);" aria-label="Select Language" onchange="window.I18nModule.setLanguage(this.value); var m = document.getElementById('modalLanguageToggle'); if(m) m.value = this.value;">
           <option value="en">English</option>
           <option value="ta">தமிழ்</option>
         </select>
-        <button onclick="document.getElementById('prayerSettingsModal').classList.remove('hidden')" class="btn btn-secondary btn-icon sm" aria-label="App Settings" title="App Settings">
+        <button onclick="document.getElementById('prayerSettingsModal').classList.remove('hidden')" class="btn btn-secondary btn-icon sm" aria-label="App Settings" title="App Settings" id="headerSettingsBtn">
           <svg class="nav-icon svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
         </button>
-        <button id="themeToggleBtn" class="btn btn-secondary btn-icon sm" aria-label="Toggle Theme" onclick="window.ThemeModule.toggleTheme()"><svg class="nav-icon svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg></button>
+        <button id="themeToggleBtn" class="btn btn-secondary btn-icon sm header-desktop-only" aria-label="Toggle Theme" onclick="window.ThemeModule.toggleTheme()"><svg class="nav-icon svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg></button>
       </div>
     </header>
 
@@ -404,9 +391,11 @@
         <button class="tab active" data-guide="wudu" onclick="window.PrayerModule.showGuide('wudu')">Wuḍū' (Ablution)</button>
         <button class="tab" data-guide="salah" onclick="window.PrayerModule.showGuide('salah')">Ṣalāh (Prayer)</button>
         <button class="tab" data-guide="sunnah" onclick="window.PrayerModule.showGuide('sunnah')">Sunnah Prayers</button>
+        <button class="tab" data-guide="imam" onclick="window.PrayerModule.showGuide('imam')">🕌 Imam Mode</button>
       </div>
       
       <div id="prayerGuideContent" style="max-width: 800px; margin: 0 auto;"></div>
+      <div id="imamModeContainer"></div>
     </section>
 
     <!-- ──────── DUAS PAGE ──────── -->
@@ -731,10 +720,40 @@
   
   <!-- MODALS -->
   <div id="prayerSettingsModal" class="modal-overlay hidden" style="z-index: 1000; background: rgba(0,0,0,0.8); backdrop-filter: blur(5px);">
-    <div class="card" style="width: 90%; max-width: 500px; position: relative; border-color: var(--color-emerald);">
+    <div class="card" style="width: 90%; max-width: 500px; max-height: 85vh; overflow-y: auto; position: relative; border-color: var(--color-emerald);">
       <button onclick="document.getElementById('prayerSettingsModal').classList.add('hidden')" style="position: absolute; top: var(--space-4); right: var(--space-4); background: none; border: none; color: var(--color-text-muted); cursor: pointer;"><svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
       <h4 style="font-weight: 800; font-size: var(--text-xl); margin-bottom: var(--space-6); color: var(--color-text-primary);">App Settings</h4>
       
+      <!-- General Settings: Language, Theme, Hijri -->
+      <h5 style="font-weight: 600; font-size: var(--text-sm); margin-bottom: var(--space-3); color: var(--color-text-secondary);">General</h5>
+      <div class="grid grid-2 gap-4 mb-4">
+        <div class="input-group">
+          <label>Language</label>
+          <select class="input" id="modalLanguageToggle" aria-label="Select Language" onchange="window.I18nModule.setLanguage(this.value); document.getElementById('languageToggle').value = this.value; var sb = document.getElementById('sidebarLanguageToggle'); if(sb) sb.value = this.value;">
+            <option value="en">English</option>
+            <option value="ta">தமிழ்</option>
+          </select>
+        </div>
+        <div class="input-group">
+          <label>Theme</label>
+          <select class="input" id="modalThemeToggle" onchange="window.ThemeModule.setThemeFromModal(this.value)">
+            <option value="dark">Dark Mode</option>
+            <option value="light">Light Mode</option>
+          </select>
+        </div>
+        <div class="input-group">
+          <label>Hijri Date Adjustment</label>
+          <select class="input" id="hijriAdjustment" onchange="window.HudaApp.setHijriAdjustment(parseInt(this.value))">
+            <option value="-2">-2 days</option>
+            <option value="-1">-1 day</option>
+            <option value="0" selected>No adjustment</option>
+            <option value="1">+1 day</option>
+            <option value="2">+2 days</option>
+          </select>
+        </div>
+      </div>
+      <div class="divider"></div>
+
       <h5 style="font-weight: 600; font-size: var(--text-sm); margin-bottom: var(--space-3); color: var(--color-text-secondary);">Qur'an Settings</h5>
       <div class="grid grid-2 gap-4 mb-4">
         <div class="input-group">
